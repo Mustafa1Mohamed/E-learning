@@ -17,8 +17,8 @@ function App() {
           <Route path='/' element={<Home />} />
           <Route path='/login' element={<Login />} />
           <Route path='/register' element={<Register />} />
-          <Route path='/favourite' element={<Favourite />} />
-          <Route path='/whishlist' element={<Wishlist />} />
+          <Route path='/favorites' element={<Favourite />} />
+          <Route path='/wishlist' element={<Wishlist />} />
           <Route path='/courses' element={<Courses />} />
           <Route path='*' element={<NotFound />} />
         </Routes>
