@@ -4,7 +4,7 @@ import Card from "../../components/Card";
 import Title from "../../components/Title";
 
 function Courses() {
-  const [courses, setCourses] = useState([]);
+    const [courses, setCourses] = useState([]);
 
     const API_URL = "https://retoolapi.dev/dL2nNn/data";
 
@@ -12,7 +12,6 @@ function Courses() {
         axios
             .get(API_URL)
             .then((res) => {
-                console.log("API DATA:", res.data); // Debug: check the response
                 setCourses(res.data);
             })
             .catch((err) => console.log("API Error:", err));

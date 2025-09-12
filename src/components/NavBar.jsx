@@ -1,9 +1,30 @@
-import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import "./NavBar.css";
 
 function Navbar() {
+  const favorite = useSelector((state) => state.FavReducers.favorites);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [user, setUser] = useState(null);
+  const navigate = useNavigate();
 
+  useEffect(() => {
+    const handleStorageChange = () => {
+      setUser(JSON.parse(localStorage.getItem("currentUser")));
+    };
+    const storedUser = JSON.parse(localStorage.getItem("currentUser"));
+    setUser(storedUser);
+    window.addEventListener("userChange", handleStorageChange);
+    return () => window.removeEventListener("userChange", handleStorageChange);
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem("currentUser");
+    window.dispatchEvent(new Event("userChange"));
+    setUser(null);
+    navigate("/login");
+  };
   return (
     <header className="absolute inset-x-0 top-0 z-50">
       <nav
@@ -11,13 +32,7 @@ function Navbar() {
         className="flex items-center justify-between p-4 lg:px-8 bg-gray-100 shadow-md"
       >
         {/* Logo */}
-        <div className="flex lg:flex-1">
-          <NavLink to="/" className="-m-1.5 p-1.5 flex items-center">
-            <span className="text-2xl font-bold text-indigo-600">
-              E-Learning
-            </span>
-          </NavLink>
-        </div>
+        <div className="flex lg:flex-1"> <NavLink to="@" className="-m-1.5 p-1.5 flex items-center"> <span className="text-2xl font-bold text-indigo-600"> E-Learning </span> </NavLink> </div>
 
         {/* Mobile Menu Button */}
         <div className="flex lg:hidden">
@@ -46,25 +61,47 @@ function Navbar() {
 
         {/* Desktop Menu */}
         <div className="hidden lg:flex lg:gap-x-12">
-          <NavLink to="/" className="text-sm font-semibold text-black">Home</NavLink>
-          <NavLink to="/courses" className="text-sm font-semibold text-black">Courses</NavLink>
-          <NavLink to="/favourite" className="text-sm font-semibold text-black">Favorites</NavLink>
-          <NavLink to="/whishlist" className="text-sm font-semibold text-black">Wishlist</NavLink>
+          <NavLink to="/" className="text-sm font-semibold text-black">
+            Home
+          </NavLink>
+          <NavLink to="/courses" className="text-sm font-semibold text-black">
+            Courses
+          </NavLink>
+          <NavLink to="/favourite" className="text-sm font-semibold text-black">
+            Favorites{" "}
+            <span className="text-xs text-gray-500">({favorite.length})</span>
+          </NavLink>
+          <NavLink to="/whishlist" className="text-sm font-semibold text-black">
+            Wishlist
+          </NavLink>
         </div>
 
-        {/* Login Button */}
-        <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-          <NavLink to="/login" className="text-sm font-semibold text-black">
-            Log in <span aria-hidden="true">&rarr;</span>
-          </NavLink>
+        {/* Desktop Login/User */}
+        <div className="hidden lg:flex lg:flex-1 lg:justify-end items-center gap-4">
+          {user ? (
+            <>
+              <span className="text-sm font-semibold text-black">
+                Hello, {user.name}
+              </span>
+              <button
+                onClick={handleLogout}
+                className="text-sm font-semibold text-red-600 hover:text-red-800"
+              >
+                Logout
+              </button>
+            </>
+          ) : (
+            <NavLink to="/login" className="text-sm font-semibold text-black">
+              Log in <span aria-hidden="true">&rarr;</span>
+            </NavLink>
+          )}
         </div>
       </nav>
 
       {/* Mobile Menu Panel */}
       <div
-        className={`lg:hidden fixed inset-0 z-50 flex justify-end transform transition-transform duration-500 ease-in-out ${
-          mobileMenuOpen ? "translate-x-0" : "translate-x-full"
-        }`}
+        className={`lg:hidden fixed inset-0 z-50 flex justify-end transform transition-transform duration-500 ease-in-out ${mobileMenuOpen ? "translate-x-0" : "translate-x-full"
+          }`}
       >
         <div className="w-2/5 h-full bg-gray-100 shadow-lg p-6">
           {/* Header inside menu */}
@@ -125,12 +162,26 @@ function Navbar() {
                 </NavLink>
               </div>
               <div className="py-6">
-                <NavLink
-                  to="/login"
-                  className="block rounded-lg px-3 py-2.5 text-base font-semibold text-black hover:bg-gray-200 hover:text-indigo-600"
-                >
-                  Log in
-                </NavLink>
+                {user ? (
+                  <>
+                    <span className="block px-3 py-2 text-base font-semibold text-black">
+                      Hello, {user.name}
+                    </span>
+                    <button
+                      onClick={handleLogout}
+                      className="block w-full text-left rounded-lg px-3 py-2 text-base font-semibold text-red-600 hover:bg-gray-200"
+                    >
+                      Logout
+                    </button>
+                  </>
+                ) : (
+                  <NavLink
+                    to="/login"
+                    className="block rounded-lg px-3 py-2.5 text-base font-semibold text-black hover:bg-gray-200 hover:text-indigo-600"
+                  >
+                    Log in
+                  </NavLink>
+                )}
               </div>
             </div>
           </div>
@@ -141,219 +192,3 @@ function Navbar() {
 }
 
 export default Navbar;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// import React from "react";
-// import { NavLink } from "react-router-dom";
-// function Navbar() {
-//   return (
-//     <header className="absolute inset-x-0 top-0 z-50">
-//       <nav
-//         aria-label="Global"
-//         className="flex items-center justify-between p-6 lg:px-8"
-//       >
-//         <div className="flex lg:flex-1">
-//           <NavLink to="/" className="-m-1.5 p-1.5 flex items-center">
-//             <span className="text-2xl font-bold text-indigo-500">
-//               E-Learning
-//             </span>
-//           </NavLink>
-//         </div>
-//         <div className="flex lg:hidden">
-//           <button
-//             type="button"
-//             command="show-modal"
-//             commandfor="mobile-menu"
-//             className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-200"
-//           >
-//             <span className="sr-only">Open main menu</span>
-//             <svg
-//               viewBox="0 0 24 24"
-//               fill="none"
-//               stroke="currentColor"
-//               strokeWidth="1.5"
-//               aria-hidden="true"
-//               className="size-6"
-//             >
-//               <path
-//                 d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
-//                 strokeLinecap="round"
-//                 strokeLinejoin="round"
-//               />
-//             </svg>
-//           </button>
-//         </div>
-//         <div className="hidden lg:flex lg:gap-x-12">
-//           <NavLink to="/" className="text-sm font-semibold text-white">Home</NavLink>
-//           <NavLink to="/courses" className="text-sm font-semibold text-white">Courses</NavLink>
-//           <NavLink to="/favourite" className="text-sm font-semibold text-white">Favorites</NavLink>
-//           <NavLink to="/whishlist" className="text-sm font-semibold text-white">Wishlist</NavLink>
-//         </div>
-//         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-//           <NavLink to="/login" className="text-sm font-semibold text-white">
-//             Log in <span aria-hidden="true">&rarr;</span>
-//           </NavLink>
-//         </div>
-//       </nav>
-//     </header>
-//   );
-// }
-
-// export default Navbar;
-
-
-
-
-// 'use client'
-
-// import { useState } from 'react'
-// import { Dialog, DialogPanel } from '@headlessui/react'
-// import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
-// import headerImg from '../header.png'
-
-
-// const navigation = [
-//     { name: 'Home', href: '#' },
-//     { name: 'Courses', href: '#' },
-//     { name: 'Favorites', href: '#' },
-//     { name: 'Wishlist', href: '#' },
-// ]
-
-// export default function NavBar() {
-//     const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-
-//     return (
-//         <div className="bg-gray-900" style={{ backgroundImage: `url(${headerImg})`, backgroundRepeat: 'no-repeat',backgroundSize:"cover" }}
-// >
-//             <header className="absolute inset-x-0 top-0 z-50">
-//                 <nav aria-label="Global" className="flex items-center justify-between p-6 lg:px-8">
-//                     <div className="flex lg:flex-1">
-//                         <a href="#" className="-m-1.5 p-1.5 flex items-center">
-//                             <span className="text-2xl font-bold text-indigo-500">E-Learning</span>
-//                         </a>
-//                     </div>
-
-//                     <div className="flex lg:hidden">
-//                         <button
-//                             type="button"
-//                             onClick={() => setMobileMenuOpen(true)}
-//                             className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-200"
-//                         >
-//                             <span className="sr-only">Open main menu</span>
-//                             <Bars3Icon aria-hidden="true" className="size-6" />
-//                         </button>
-//                     </div>
-//                     <div className="hidden lg:flex lg:gap-x-12">
-//                         {navigation.map((item) => (
-//                             <a key={item.name} href={item.href} className="text-sm/6 font-semibold text-white">
-//                                 {item.name}
-//                             </a>
-//                         ))}
-//                     </div>
-//                     <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-//                         <a href="#" className="text-sm/6 font-semibold text-white">
-//                             Log in <span aria-hidden="true">&rarr;</span>
-//                         </a>
-//                     </div>
-//                 </nav>
-//                 <Dialog open={mobileMenuOpen} onClose={setMobileMenuOpen} className="lg:hidden">
-//                     <div className="fixed inset-0 z-50" />
-//                     <DialogPanel className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-gray-900 p-6 sm:max-w-sm sm:ring-1 sm:ring-gray-100/10">
-//                         <div className="flex lg:flex-1">
-//   <a href="#" className="-m-1.5 p-1.5 flex items-center">
-//     <span className="text-2xl font-bold text-indigo-500">E-Learning</span>
-//   </a>
-// </div>
-
-//                         <div className="mt-6 flow-root">
-//                             <div className="-my-6 divide-y divide-white/10">
-//                                 <div className="space-y-2 py-6">
-//                                     {navigation.map((item) => (
-//                                         <a
-//                                             key={item.name}
-//                                             href={item.href}
-//                                             className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-white hover:bg-white/5"
-//                                         >
-//                                             {item.name}
-//                                         </a>
-//                                     ))}
-//                                 </div>
-//                                 <div className="py-6">
-//                                     <a
-//                                         href="#"
-//                                         className="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-white hover:bg-white/5"
-//                                     >
-//                                         Log in
-//                                     </a>
-//                                 </div>
-//                             </div>
-//                         </div>
-//                     </DialogPanel>
-//                 </Dialog>
-//             </header>
-
-//             <div className="relative isolate px-6 pt-14 lg:px-8">
-//                 <div
-//                     aria-hidden="true"
-//                     className="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"
-//                 >
-//                     <div
-//                         style={{
-//                             clipPath:
-//                                 'polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)',
-//                         }}
-//                         className="relative left-[calc(50%-11rem)] aspect-1155/678 w-144.5 -translate-x-1/2 rotate-30 bg-linear-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%-30rem)] sm:w-288.75"
-//                     />
-//                 </div>
-//                 <div className="mx-auto max-w-2xl py-32 sm:py-48 lg:py-56">
-
-//                     <div className="relative z-10 flex flex-col items-center justify-center h-full text-center">
-//                         <h1 className="text-5xl font-semibold tracking-tight text-balance text-white sm:text-7xl">
-//                             Best online
-// Learning system
-//                         </h1>
-//                         <p className="mt-8 text-lg font-medium text-pretty text-gray-400 sm:text-xl/8">
-//                             Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure qui lorem cupidatat commodo. Elit sunt amet
-//                             fugiat veniam occaecat.
-//                         </p>
-//                         <div className="mt-10 flex items-center justify-center gap-x-6">
-//                             <a
-//                                 href="#"
-//                                 className="rounded-md bg-indigo-500 px-3.5 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-indigo-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
-//                             >
-//                                 Read More
-//                             </a>
-                            
-//                         </div>
-//                     </div>
-//                 </div>
-//                 <div
-//                     aria-hidden="true"
-//                     className="absolute inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-30rem)]"
-//                 >
-//                     <div
-//                         style={{
-//                             clipPath:
-//                                 'polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)',
-//                         }}
-//                         className="relative left-[calc(50%+3rem)] aspect-1155/678 w-144.5 -translate-x-1/2 bg-linear-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%+36rem)] sm:w-288.75"
-//                     />
-//                 </div>
-//             </div>
-//         </div>
-//     )
-// }
-
