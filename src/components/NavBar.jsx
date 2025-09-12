@@ -1,5 +1,5 @@
 import React from "react";
-
+import { NavLink } from "react-router-dom";
 function Navbar() {
   return (
     <header className="absolute inset-x-0 top-0 z-50">
@@ -8,11 +8,11 @@ function Navbar() {
         className="flex items-center justify-between p-6 lg:px-8"
       >
         <div className="flex lg:flex-1">
-          <a href="#" className="-m-1.5 p-1.5 flex items-center">
+          <NavLink to="/" className="-m-1.5 p-1.5 flex items-center">
             <span className="text-2xl font-bold text-indigo-500">
               E-Learning
             </span>
-          </a>
+          </NavLink>
         </div>
         <div className="flex lg:hidden">
           <button
@@ -39,15 +39,15 @@ function Navbar() {
           </button>
         </div>
         <div className="hidden lg:flex lg:gap-x-12">
-          <a href="#" className="text-sm font-semibold text-white">Home</a>
-          <a href="#" className="text-sm font-semibold text-white">Courses</a>
-          <a href="#" className="text-sm font-semibold text-white">Favorites</a>
-          <a href="#" className="text-sm font-semibold text-white">Wishlist</a>
+          <NavLink to="/" className="text-sm font-semibold text-white">Home</NavLink>
+          <NavLink to="/courses" className="text-sm font-semibold text-white">Courses</NavLink>
+          <NavLink to="/favorites" className="text-sm font-semibold text-white">Favorites</NavLink>
+          <NavLink to="/wishlist" className="text-sm font-semibold text-white">Wishlist</NavLink>
         </div>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-          <a href="#" className="text-sm font-semibold text-white">
+          <NavLink to="/login" className="text-sm font-semibold text-white">
             Log in <span aria-hidden="true">&rarr;</span>
-          </a>
+          </NavLink>
         </div>
       </nav>
     </header>
