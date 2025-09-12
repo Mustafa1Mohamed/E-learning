@@ -1,0 +1,20 @@
+-- E-learning API --
+
+--  https://retoolapi.dev/dL2nNn/data --
+_______________________________________________________________________
+
+GET	https://retoolapi.dev/dL2nNn/data
+
+GET filter	https://retoolapi.dev/dL2nNn/data?course_name=value
+
+GET by id	https://retoolapi.dev/dL2nNn/data/1
+
+GET paginate	https://retoolapi.dev/dL2nNn/data?_page=2&_limit=10
+
+POST	https://api-generator.retool.com/dL2nNn/data
+
+PUT	https://retoolapi.dev/dL2nNn/data/1
+
+PATCH	https://retoolapi.dev/dL2nNn/data/1
+
+DELETE	https://retoolapi.dev/dL2nNn/data/1
