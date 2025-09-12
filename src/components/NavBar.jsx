@@ -41,7 +41,7 @@ function Navbar() {
         <div className="hidden lg:flex lg:gap-x-12">
           <NavLink to="/" className="text-sm font-semibold text-white">Home</NavLink>
           <NavLink to="/courses" className="text-sm font-semibold text-white">Courses</NavLink>
-          <NavLink to="/favorites" className="text-sm font-semibold text-white">Favorites</NavLink>
+          <NavLink to="/favourite" className="text-sm font-semibold text-white">Favorites</NavLink>
           <NavLink to="/wishlist" className="text-sm font-semibold text-white">Wishlist</NavLink>
         </div>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
