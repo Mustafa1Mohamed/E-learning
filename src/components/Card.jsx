@@ -1,7 +1,9 @@
 import { Link } from "react-router-dom";
-import { HeartIcon } from "@heroicons/react/24/solid";
-import { useState } from "react";
-
+import { HeartIcon as SolidHeart } from "@heroicons/react/24/solid";
+import { HeartIcon as OutlineHeart } from "@heroicons/react/24/outline";
+import { useDispatch, useSelector } from "react-redux"; 
+import { useNavigate } from "react-router-dom";
+import { toggleFav } from "../Store/actions/FavAction";
 export default function Card({
     id,
     course_name,
@@ -10,13 +12,29 @@ export default function Card({
     course_price,
     course_description,
     path,
+    isFavoritesPage = false,
 }) {
-    const [isFavorite, setIsFavorite] = useState(false);
-
-    const toggleFavorite = () => {
-        setIsFavorite(!isFavorite);
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const favorites = useSelector((state) => state.FavReducers.favorites);
+    const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+    const isFavorite = favorites.some((course) => course.id === id);
+    const handleToggleFavorite = () => {
+        if (!currentUser) {
+            navigate("/login");
+            return;
+        }
+        dispatch(
+            toggleFav({
+                id,
+                course_name,
+                course_plan,
+                course_image,
+                course_price,
+                course_description,
+            })
+        );
     };
-
     return (
         <div className="bg-white shadow-md rounded-lg overflow-hidden flex flex-col">
             {/* Image */}
@@ -35,12 +53,12 @@ export default function Card({
                             <Link to={path}>{course_name}</Link>
                         </h3>
                         {/* Heart Toggle */}
-                        <button onClick={toggleFavorite}>
-                            <HeartIcon
-                                className={`h-6 w-6 transition-colors duration-200 ${
-                                    isFavorite ? "text-red-500" : "text-gray-400"
-                                }`}
-                            />
+                        <button onClick={handleToggleFavorite}>
+                            {isFavorite ? (
+                                <SolidHeart className="h-6 w-6 text-red-500" />
+                            ) : (
+                                <OutlineHeart className="h-6 w-6 text-gray-400" />
+                            )}
                         </button>
                     </div>
 
@@ -74,13 +92,24 @@ export default function Card({
                         </Link>
                     )}
 
-                    <button className="text-md text-center font-medium text-white bg-green-600 hover:bg-green-500 px-3 py-2 rounded-md">
-                        Add to Cart
-                    </button>
-
+                    {currentUser?(!isFavoritesPage && (
+                        <button className="text-md text-center font-medium text-white bg-green-600 hover:bg-green-500 px-3 py-2 rounded-md">
+                            Add to Cart
+                        </button>
+                    )):(
+                        <Link to="/login" className="text-md text-center font-medium text-white bg-green-600 hover:bg-green-500 px-3 py-2 rounded-md">
+                            Add to Cart
+                        </Link>
+                    )}
+                    {currentUser?(!isFavoritesPage && (
                     <button className="text-md text-center font-medium text-white bg-yellow-500 hover:bg-yellow-400 px-3 py-2 rounded-md">
                         Add to Wishlist
-                    </button>
+                    </button>)):(
+
+                    <Link to="/login" className="text-md text-center font-medium text-white bg-yellow-500 hover:bg-yellow-400 px-3 py-2 rounded-md">
+                        Add to Wishlist
+                    </Link>
+                    )}
                 </div>
             </div>
         </div>

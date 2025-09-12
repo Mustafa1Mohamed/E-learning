@@ -5,7 +5,7 @@ const INITIAL_STATE = {
 const FavReducer = (state = INITIAL_STATE, action) => {
     switch (action.type) {
         case "TOGGLE_FAV":
-            const exists = state.favorites.find((movie) => movie.id === action.payload.id)
+            const exists = state.favorites.find((course) => course.id === action.payload.id)
             let updatedFavs=[]
 
             if (exists) {
