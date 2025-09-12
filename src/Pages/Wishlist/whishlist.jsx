@@ -1,4 +1,4 @@
-import React from 'react'
+
 
 function Wishlist() {
   return (
@@ -6,4 +6,4 @@ function Wishlist() {
   )
 }
 
-export default Wishlist
+export default Wishlist     
