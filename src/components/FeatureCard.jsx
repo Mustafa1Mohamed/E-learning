@@ -1,4 +1,3 @@
-import { ReactNode } from "react";
 export default function FeatureCard({ icon, title, description, link }) {
   return (
     <div className=" text-center py-6 px-8 mt-8  rounded-lg shadow-md hover:shadow-md transition">

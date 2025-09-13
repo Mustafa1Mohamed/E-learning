@@ -51,10 +51,10 @@ export default function Footer() {
         <div>
           <h3 className="font-semibold mb-4">Follow Us</h3>
           <div className="flex space-x-4 text-indigo-600 text-lg">
-            <a href="#"><FaFacebookF /></a>
-            <a href="#"><FaGooglePlusG /></a>
-            <a href="#"><FaInstagram /></a>
-            <a href="#"><FaTwitter /></a>
+            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer"><FaFacebookF /></a>
+            <a href="https://plus.google.com" target="_blank" rel="noopener noreferrer"><FaGooglePlusG /></a>
+            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer"><FaInstagram /></a>
+            <a href="https://twitter.com" target="_blank" rel="noopener noreferrer"><FaTwitter /></a>
           </div>
         </div>
       </div>
