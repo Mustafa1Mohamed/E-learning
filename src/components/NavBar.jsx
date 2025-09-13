@@ -1,13 +1,26 @@
-import React, { useEffect, useState } from "react";
+import React, { use, useEffect, useState } from "react";
+import { useTranslation } from 'react-i18next';
 import { NavLink, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import "./NavBar.css";
 
 function Navbar() {
+  const { t, i18n } = useTranslation();
+  const [locale, setLocale] = useState('en');
   const favorite = useSelector((state) => state.FavReducers.favorites);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
+
+
+  const handleLanguageclick = () => {
+    const newLocale = locale === 'en' ? 'ar' : 'en';
+    setLocale(newLocale);
+    i18n.changeLanguage(newLocale);
+  }
+  useEffect(() => {
+    i18n.changeLanguage(locale);
+  }, [i18n, locale]);
 
   useEffect(() => {
     const handleStorageChange = () => {
@@ -60,19 +73,19 @@ function Navbar() {
         </div>
 
         {/* Desktop Menu */}
-        <div className="hidden lg:flex lg:gap-x-12">
+        <div dir={locale === 'ar' ? 'rtl' : 'ltr'} className="hidden lg:flex lg:gap-x-12">
           <NavLink to="/" className="text-sm font-semibold text-black">
-            Home
+            {t("Home")}
           </NavLink>
           <NavLink to="/courses" className="text-sm font-semibold text-black">
-            Courses
+            {t("Courses")}
           </NavLink>
           <NavLink to="/favourite" className="text-sm font-semibold text-black">
-            Favorites{" "}
+            {t("Favorites")}{" "}
             <span className="text-xs text-gray-500">({favorite.length})</span>
           </NavLink>
           <NavLink to="/whishlist" className="text-sm font-semibold text-black">
-            Wishlist
+            {t("Wishlist")}
           </NavLink>
         </div>
 
@@ -80,19 +93,25 @@ function Navbar() {
         <div className="hidden lg:flex lg:flex-1 lg:justify-end items-center gap-4">
           {user ? (
             <>
-              <span className="text-sm font-semibold text-black">
-                Hello, {user.name}
+              <span dir={locale === 'ar' ? 'rtl' : 'ltr'} className="text-sm font-semibold text-black">
+                {t("Hello")}, {user.name}
+              </span>
+              <span dir={locale === 'ar' ? 'rtl' : 'ltr'}
+                onClick={() => handleLanguageclick()}
+                className=" text-left rounded-lg px-3 py-2 text-base font-semibold text-black hover:bg-gray-200"
+              >
+                {locale === 'en' ? 'Arabic' : 'الإنجليزية'}
               </span>
               <button
                 onClick={handleLogout}
                 className="text-sm font-semibold text-red-600 hover:text-red-800"
               >
-                Logout
+                {t("Logout")}
               </button>
             </>
           ) : (
             <NavLink to="/login" className="text-sm font-semibold text-black">
-              Log in <span aria-hidden="true">&rarr;</span>
+              {t("login")} <span aria-hidden="true">&rarr;</span>
             </NavLink>
           )}
         </div>
@@ -140,38 +159,44 @@ function Navbar() {
                   to="/"
                   className="block rounded-lg px-3 py-2 text-base font-semibold text-black hover:bg-gray-200 hover:text-indigo-600"
                 >
-                  Home
+                  {t("Home")}
                 </NavLink>
                 <NavLink
                   to="/courses"
                   className="block rounded-lg px-3 py-2 text-base font-semibold text-black hover:bg-gray-200 hover:text-indigo-600"
                 >
-                  Courses
+                  {t("Courses")}
                 </NavLink>
                 <NavLink
                   to="/favourite"
                   className="block rounded-lg px-3 py-2 text-base font-semibold text-black hover:bg-gray-200 hover:text-indigo-600"
                 >
-                  Favorites
+                  {t("Favorites")}
                 </NavLink>
                 <NavLink
                   to="/whishlist"
                   className="block rounded-lg px-3 py-2 text-base font-semibold text-black hover:bg-gray-200 hover:text-indigo-600"
                 >
-                  Wishlist
+                  {t("Wishlist")}
                 </NavLink>
               </div>
-              <div className="py-6">
+              <div dir={locale === 'ar' ? 'rtl' : 'ltr'} className="py-6">
                 {user ? (
                   <>
                     <span className="block px-3 py-2 text-base font-semibold text-black">
-                      Hello, {user.name}
+                      {t("Hello")}, {user.name}
                     </span>
+                    <button
+                      onClick={() => handleLanguageclick()}
+                      className="block w-full text-left rounded-lg px-3 py-2 text-base font-semibold text-black hover:bg-gray-200"
+                    >
+                      {locale === 'en' ? 'Arabic' : 'الإنجليزية'}
+                    </button>
                     <button
                       onClick={handleLogout}
                       className="block w-full text-left rounded-lg px-3 py-2 text-base font-semibold text-red-600 hover:bg-gray-200"
                     >
-                      Logout
+                      {t("Logout")}
                     </button>
                   </>
                 ) : (
@@ -179,9 +204,10 @@ function Navbar() {
                     to="/login"
                     className="block rounded-lg px-3 py-2.5 text-base font-semibold text-black hover:bg-gray-200 hover:text-indigo-600"
                   >
-                    Log in
+                    {t("Login")}
                   </NavLink>
                 )}
+                
               </div>
             </div>
           </div>
