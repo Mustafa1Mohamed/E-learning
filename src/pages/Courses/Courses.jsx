@@ -5,7 +5,6 @@ import Title from "../../components/Title";
 
 function Courses() {
     const [courses, setCourses] = useState([]);
-
     const API_URL = "https://retoolapi.dev/dL2nNn/data";
 
     useEffect(() => {
@@ -32,6 +31,7 @@ function Courses() {
                                 course_plan={course.course_plan}
                                 course_image={course.course_image}
                                 course_price={course.course_price}
+                                
                                 path={`/courses/${course.id}`}
                             />
                         ))
@@ -44,4 +44,5 @@ function Courses() {
     );
 }
 
-export default Courses
+export default Courses;
+

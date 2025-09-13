@@ -4,6 +4,7 @@ import { HeartIcon as OutlineHeart } from "@heroicons/react/24/outline";
 import { useDispatch, useSelector } from "react-redux"; 
 import { useNavigate } from "react-router-dom";
 import { toggleFav } from "../Store/actions/FavAction";
+
 export default function Card({
     id,
     course_name,
@@ -19,6 +20,7 @@ export default function Card({
     const favorites = useSelector((state) => state.FavReducers.favorites);
     const currentUser = JSON.parse(localStorage.getItem("currentUser"));
     const isFavorite = favorites.some((course) => course.id === id);
+
     const handleToggleFavorite = () => {
         if (!currentUser) {
             navigate("/login");
@@ -35,6 +37,7 @@ export default function Card({
             })
         );
     };
+
     return (
         <div className="bg-white shadow-md rounded-lg overflow-hidden flex flex-col">
             {/* Image */}
@@ -69,17 +72,17 @@ export default function Card({
                     )}
                 </div>
 
+                {course_plan && (
+                    <p className="text-sm text-gray-700 font-medium my-1">
+                        {course_plan}
+                    </p>
+                )}
                 {course_description && (
                     <p className="text-sm text-gray-500 line-clamp-3 mt-2">
                         {course_description}
                     </p>
                 )}
 
-                {course_plan && (
-                    <p className="text-sm text-gray-700 font-medium my-1">
-                        {course_plan}
-                    </p>
-                )}
 
                 {/* Buttons Section */}
                 <div className="flex flex-col gap-3 mt-5">
@@ -92,23 +95,34 @@ export default function Card({
                         </Link>
                     )}
 
-                    {currentUser?(!isFavoritesPage && (
-                        <button className="text-md text-center font-medium text-white bg-green-600 hover:bg-green-500 px-3 py-2 rounded-md">
-                            Add to Cart
-                        </button>
-                    )):(
-                        <Link to="/login" className="text-md text-center font-medium text-white bg-green-600 hover:bg-green-500 px-3 py-2 rounded-md">
+                    {currentUser ? (
+                        !isFavoritesPage && (
+                            <button className="text-md text-center font-medium text-white bg-green-600 hover:bg-green-500 px-3 py-2 rounded-md">
+                                Add to Cart
+                            </button>
+                        )
+                    ) : (
+                        <Link
+                            to="/login"
+                            className="text-md text-center font-medium text-white bg-green-600 hover:bg-green-500 px-3 py-2 rounded-md"
+                        >
                             Add to Cart
                         </Link>
                     )}
-                    {currentUser?(!isFavoritesPage && (
-                    <button className="text-md text-center font-medium text-white bg-yellow-500 hover:bg-yellow-400 px-3 py-2 rounded-md">
-                        Add to Wishlist
-                    </button>)):(
 
-                    <Link to="/login" className="text-md text-center font-medium text-white bg-yellow-500 hover:bg-yellow-400 px-3 py-2 rounded-md">
-                        Add to Wishlist
-                    </Link>
+                    {currentUser ? (
+                        !isFavoritesPage && (
+                            <button className="text-md text-center font-medium text-white bg-yellow-500 hover:bg-yellow-400 px-3 py-2 rounded-md">
+                                Add to Wishlist
+                            </button>
+                        )
+                    ) : (
+                        <Link
+                            to="/login"
+                            className="text-md text-center font-medium text-white bg-yellow-500 hover:bg-yellow-400 px-3 py-2 rounded-md"
+                        >
+                            Add to Wishlist
+                        </Link>
                     )}
                 </div>
             </div>
