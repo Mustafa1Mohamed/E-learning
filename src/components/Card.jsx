@@ -27,8 +27,6 @@ export default function Card({
     const isInWishlist = whishlist.some((course) => course.id === id);
 
     const currentUser = JSON.parse(localStorage.getItem("currentUser"));
-
-
     const handleToggleFavorite = () => {
         if (!currentUser) {
             navigate("/login");
