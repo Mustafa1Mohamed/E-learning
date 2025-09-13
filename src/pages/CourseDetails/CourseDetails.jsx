@@ -29,7 +29,7 @@ function CourseDetails() {
     if (!currentUser) return navigate("/login");
     dispatch(toggleWhishlist(course));
   };
-  
+
   useEffect(() => {
     axios
       .get(`https://retoolapi.dev/dL2nNn/data/${id}`)
