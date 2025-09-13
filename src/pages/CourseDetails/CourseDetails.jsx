@@ -56,8 +56,8 @@ function CourseDetails() {
           <div>
             <div className="flex items-center gap-4">
               <h1 className="text-2xl font-bold text-gray-900 mb-4">
-              {course.course_name}
-            </h1>
+                {course.course_name}
+              </h1>
               {/* Heart Toggle */}
               <button onClick={handleToggleFavorite}>
                 {isFavorite ? (
