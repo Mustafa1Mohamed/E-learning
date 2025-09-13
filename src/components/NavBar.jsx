@@ -60,7 +60,7 @@ function Navbar() {
         </div>
 
         {/* Desktop Menu */}
-        <div className="hidden lg:flex lg:gap-x-12">
+        <div className="hidden lg:flex lg:gap-x-12 align-content-center">
           <NavLink to="/" className="text-sm font-semibold text-black">
             Home
           </NavLink>
