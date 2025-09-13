@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toggleFav } from "../Store/actions/FavAction";
 import { toggleWhishlist } from "../Store/actions/WhishListAction";
-
 export default function Card({
     id,
     course_name,
@@ -29,7 +28,7 @@ export default function Card({
 
     const currentUser = JSON.parse(localStorage.getItem("currentUser"));
 
-    // Toggle Favorite
+
     const handleToggleFavorite = () => {
         if (!currentUser) {
             navigate("/login");
@@ -46,8 +45,6 @@ export default function Card({
             })
         );
     };
-
-    // Toggle Wishlist
     const handleToggleWishlist = () => {
         if (!currentUser) {
             navigate("/login");
@@ -64,7 +61,6 @@ export default function Card({
             })
         );
     };
-
     return (
         <div className="bg-white shadow-md rounded-lg overflow-hidden flex flex-col">
             {/* Image */}
@@ -127,7 +123,6 @@ export default function Card({
                             Add to Cart
                         </Link>
                     )}
-
                     {/* Wishlist */}
                     {currentUser ? (
                         !isFavoritesPage && (
@@ -157,6 +152,31 @@ export default function Card({
                             to="/login"
                             className="text-md text-center font-medium text-white bg-yellow-500 hover:bg-yellow-400 px-3 py-2 rounded-md"
                         >
+                            Add to Wishlist
+                        </Link>
+                    )}
+                    {currentUser ? (!isFavoritesPage && (
+                        <button className="text-md text-center font-medium text-white bg-green-600 hover:bg-green-500 px-3 py-2 rounded-md">
+                            Add to Cart
+                        </button>
+                    )) : (
+                        <Link to="/login" className="text-md text-center font-medium text-white bg-green-600 hover:bg-green-500 px-3 py-2 rounded-md">
+                            Add to Cart
+                        </Link>
+                    )}
+                    {currentUser ? (!isFavoritesPage && (
+                        <button
+                            className={`flex justify-center items-center gap-x-2 text-md text-center font-medium text-white bg-yellow-500 hover:bg-yellow-400 px-3 py-2 rounded-md`}
+                            onClick={handleToggleWishlist}
+                        >
+                            <span>Add to Wishlist</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill={isInWishlist ? "white" : "none"} viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-5 h-5">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0 1 11.186 0Z" />
+                            </svg>
+                        </button>
+                    )) : (
+
+                        <Link to="/login" className="text-md text-center font-medium text-white bg-yellow-500 hover:bg-yellow-400 px-3 py-2 rounded-md">
                             Add to Wishlist
                         </Link>
                     )}
