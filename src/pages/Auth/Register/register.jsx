@@ -2,8 +2,11 @@ import { useEffect, useState } from "react";
 import { useNavigate, NavLink } from "react-router-dom";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
 import GlobalMessage from "../../../components/GlobalMessage";
+import { useTranslation } from "react-i18next";
 
 function Register() {
+    const { t, i18n } = useTranslation()
+    const direction = i18n.dir()
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -48,9 +51,9 @@ function Register() {
                 setErrors((prev) => ({
                     ...prev,
                     nameErr: !value
-                        ? "Name is required"
+                        ? t("Name is required")
                         : value.length < 3
-                            ? "Name too short"
+                            ? t("Name too short")
                             : "",
                 }));
                 break;
@@ -59,9 +62,9 @@ function Register() {
                 setErrors((prev) => ({
                     ...prev,
                     usernameErr: !value
-                        ? "Username is required"
+                        ? t("Username is required")
                         : value.length < 3
-                            ? "Username too short"
+                            ? t("Username too short")
                             : "",
                 }));
                 break;
@@ -72,9 +75,9 @@ function Register() {
                 setErrors((prev) => ({
                     ...prev,
                     emailErr: !value
-                        ? "Email is required"
+                        ? t("Email is required")
                         : !emailPattern.test(value)
-                            ? "Email is invalid"
+                            ? t("Email is invalid")
                             : "",
                 }));
                 break;
@@ -84,12 +87,12 @@ function Register() {
                 setErrors((prev) => ({
                     ...prev,
                     passErr: !value
-                        ? "Password is required"
+                        ? t("Password is required")
                         : value.length < 8
-                            ? "Password must be at least 8 characters"
+                            ? t("Password must be at least 8 characters")
                             : passwordPattern.test(value)
                                 ? ""
-                                : "Password must contain at least one uppercase letter, one lowercase letter, one number and one special character",
+                                : t("Password must contain at least one uppercase letter, one lowercase letter, one number and one special character"),
                 }));
                 break;
 
@@ -97,9 +100,9 @@ function Register() {
                 setErrors((prev) => ({
                     ...prev,
                     confirmPassErr: !value
-                        ? "Confirm your password"
+                        ? t("Confirm your password")
                         : value !== form.password
-                            ? "Passwords do not match"
+                            ? t("Passwords do not match")
                             : "",
                 }));
                 break;
@@ -109,7 +112,7 @@ function Register() {
                     ...prev,
                     roleErr:
                         value === "admin" && !form.email.includes("admin")
-                            ? "Your email not authorized to register as admin"
+                            ? t("Your email not authorized to register as admin")
                             : "",
                 }));
                 break;
@@ -130,7 +133,7 @@ function Register() {
             errors.confirmPassErr ||
             errors.roleErr
         ) {
-            setBanner({ type: "error", message: "Please fix the highlighted errors." });
+            setBanner({ type: "error", message: t("Please fix the highlighted errors.") });
             return;
         }
 
@@ -143,22 +146,22 @@ function Register() {
         ) {
             setErrors((prev) => ({
                 ...prev,
-                nameErr: !form.name ? "Name is required" : prev.nameErr,
-                usernameErr: !form.username ? "Username is required" : prev.usernameErr,
-                emailErr: !form.email ? "Email is required" : prev.emailErr,
-                passErr: !form.password ? "Password is required" : prev.passErr,
+                nameErr: !form.name ? t("Name is required") : prev.nameErr,
+                usernameErr: !form.username ? t("Username is required") : prev.usernameErr,
+                emailErr: !form.email ? t("Email is required") : prev.emailErr,
+                passErr: !form.password ? t("Password is required") : prev.passErr,
                 confirmPassErr: !form.confirmPassword
-                    ? "Confirm your password"
+                    ? t("Confirm your password")
                     : prev.confirmPassErr,
             }));
-            setBanner({ type: "error", message: "Please fill all fields." });
+            setBanner({ type: "error", message: t("Please fill all fields.") });
             return;
         }
 
         if (form.role === "admin" && !form.email.includes("admin")) {
             setBanner({
                 type: "error",
-                message: "You are not authorized to register as admin.",
+                message: t("You are not authorized to register as admin."),
             });
             return;
         }
@@ -169,16 +172,16 @@ function Register() {
         );
 
         if (existingUser) {
-            setBanner({ type: "error", message: "Email or Username already exists." });
+            setBanner({ type: "error", message: t("Email or Username already exists.") });
             setErrors((prev) => ({
                 ...prev,
                 emailErr:
                     existingUser.username === form.username
-                        ? "Email already exists"
+                        ? t("Email already exists")
                         : prev.emailErr,
                 usernameErr:
                     existingUser.email === form.email
-                        ? "Username already exists"
+                        ? t("Username already exists")
                         : prev.usernameErr,
             }));
             return;
@@ -190,7 +193,7 @@ function Register() {
 
         setBanner({
             type: "success",
-            message: "Registration successful! Redirecting...",
+            message: t("Registration successful! Redirecting..."),
         });
 
         setTimeout(() => navigate("/login"), 1500);
@@ -217,10 +220,10 @@ function Register() {
         }`;
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gray-100 mt-10">
+        <div dir={direction} className="min-h-screen flex items-center justify-center bg-gray-100 mt-10">
             <div className="max-w-lg w-full bg-white shadow-lg rounded-xl p-6">
                 <h1 className="text-2xl font-bold text-indigo-500 mb-6 text-center">
-                    Register
+                    {t("Register")}
                 </h1>
 
                 {banner.message && (
@@ -243,15 +246,15 @@ function Register() {
                             className={inputClass(errors.nameErr, form.name)}
                         />
                         <label htmlFor="name" className={labelClass(errors.nameErr, form.name)}>
-                            Full Name
+                            {t("Full Name")}
                         </label>
                         {errors.nameErr ? (
                             <p className="mt-2 text-xs text-red-600 dark:text-red-400">
-                                <span className="font-medium">Oh, snap!</span> {errors.nameErr}
+                                <span className="font-medium">{t("Oh, snap!")}</span> {errors.nameErr}
                             </p>
                         ) : form.name ? (
                             <p className="mt-2 text-xs text-green-600 dark:text-green-400">
-                                <span className="font-medium">Well done!</span> Looks good.
+                                <span className="font-medium">{t("Well done!")}</span> {t("Looks good.")}
                             </p>
                         ) : null}
                     </div>
@@ -269,16 +272,16 @@ function Register() {
                             htmlFor="username"
                             className={labelClass(errors.usernameErr, form.username)}
                         >
-                            Username
+                            {t("Username")}
                         </label>
                         {errors.usernameErr ? (
                             <p className="mt-2 text-xs text-red-600 dark:text-red-400">
-                                <span className="font-medium">Oh, snap!</span>{" "}
+                                <span className="font-medium">{t("Oh, snap!")}</span>{" "}
                                 {errors.usernameErr}
                             </p>
                         ) : form.username ? (
                             <p className="mt-2 text-xs text-green-600 dark:text-green-400">
-                                <span className="font-medium">Well done!</span> Looks good.
+                                <span className="font-medium">{t("Well done!")}</span> {t("Looks good.")}
                             </p>
                         ) : null}
                     </div>
@@ -297,15 +300,15 @@ function Register() {
                             htmlFor="email"
                             className={labelClass(errors.emailErr, form.email)}
                         >
-                            Email Address
+                            {t("Email Address")}
                         </label>
                         {errors.emailErr ? (
                             <p className="mt-2 text-xs text-red-600 dark:text-red-400">
-                                <span className="font-medium">Oh, snap!</span> {errors.emailErr}
+                                <span className="font-medium">{t("Oh, snap!")}</span> {errors.emailErr}
                             </p>
                         ) : form.email ? (
                             <p className="mt-2 text-xs text-green-600 dark:text-green-400">
-                                <span className="font-medium">Well done!</span> Looks good.
+                                <span className="font-medium">{t("Well done!")}</span> {t("Looks good.")}
                             </p>
                         ) : null}
                     </div>
@@ -323,12 +326,12 @@ function Register() {
                             htmlFor="password"
                             className={labelClass(errors.passErr, form.password)}
                         >
-                            Password
+                            {t("Password")}
                         </label>
                         <button
                             type="button"
                             onClick={handleTogglePassword}
-                            className="absolute inset-y-0 right-3 flex items-center text-gray-500 hover:text-gray-700"
+                            className={`absolute inset-y-0 ${direction === "rtl" ? "left-3" : "right-3"} flex items-center text-gray-500 hover:text-gray-700 pb-6`}
                         >
                             {showPassword ? (
                                 <EyeSlashIcon className="h-5 w-5" />
@@ -338,11 +341,11 @@ function Register() {
                         </button>
                         {errors.passErr ? (
                             <p className="mt-2 text-xs text-red-600 dark:text-red-400">
-                                <span className="font-medium">Oh, snap!</span> {errors.passErr}
+                                <span className="font-medium">{t("Oh, snap!")}</span> {errors.passErr}
                             </p>
                         ) : form.password ? (
                             <p className="mt-2 text-xs text-green-600 dark:text-green-400">
-                                <span className="font-medium">Well done!</span> Looks good.
+                                <span className="font-medium">{("Well done!")}</span> {t("Looks good.")}
                             </p>
                         ) : null}
                     </div>
@@ -361,12 +364,12 @@ function Register() {
                             htmlFor="confirmPassword"
                             className={labelClass(errors.confirmPassErr, form.confirmPassword)}
                         >
-                            Confirm Password
+                            {t("Confirm Password")}
                         </label>
                         <button
                             type="button"
                             onClick={handleToggleConfirmPassword}
-                            className="absolute inset-y-0 right-3 flex items-center text-gray-500 hover:text-gray-700"
+                            className={`absolute inset-y-0 ${direction === "rtl" ? "left-3" : "right-3"} flex items-center text-gray-500 hover:text-gray-700`}
                         >
                             {showConfirmPassword ? (
                                 <EyeSlashIcon className="h-5 w-5" />
@@ -376,12 +379,12 @@ function Register() {
                         </button>
                         {errors.confirmPassErr ? (
                             <p className="mt-2 text-xs text-red-600 dark:text-red-400">
-                                <span className="font-medium">Oh, snap!</span>{" "}
+                                <span className="font-medium">{t("Oh, snap!")}</span>{" "}
                                 {errors.confirmPassErr}
                             </p>
                         ) : form.confirmPassword ? (
                             <p className="mt-2 text-xs text-green-600 dark:text-green-400">
-                                <span className="font-medium">Well done!</span> Looks good.
+                                <span className="font-medium">{t("Well done!")}</span> {t("Looks good.")}
                             </p>
                         ) : null}
                     </div>
@@ -393,34 +396,34 @@ function Register() {
                             onChange={handleForm}
                             className={inputClass(errors.roleErr, form.role)}
                         >
-                            <option value="user">User</option>
-                            <option value="admin">Admin</option>
+                            <option value="user">{t("User")}</option>
+                            <option value="admin">{t("Admin")}</option>
                         </select>
                         <label
                             htmlFor="role"
                             className={labelClass(errors.roleErr, form.role)}
                         >
-                            Role
+                            {t("Role")}
                         </label>
                         {errors.roleErr ? (
                             <p className="mt-2 text-xs text-red-600 dark:text-red-400">
-                                <span className="font-medium">Oh, snap!</span> {errors.roleErr}
+                                <span className="font-medium">{t("Oh, snap!")}</span> {errors.roleErr}
                             </p>
                         ) : form.role ? (
                             <p className="mt-2 text-xs text-green-600 dark:text-green-400">
-                                <span className="font-medium">Well done!</span> Looks good.
+                                <span className="font-medium">{t("Well done!")}</span> {t("Looks good.")}
                             </p>
                         ) : null}
                     </div>
 
                
                     <div>
-                        <span>Already have an account? </span>
+                        <span>{t("Already have an account?")} </span>
                         <NavLink
                             to="/login"
                             className="text-sm text-indigo-500 hover:underline"
                         >
-                            Login
+                            {t("Login")}
                         </NavLink>
                     </div>
 
@@ -429,7 +432,7 @@ function Register() {
                         type="submit"
                         className="w-full py-2 px-4 rounded-lg text-white font-medium shadow-md transition bg-indigo-500 hover:bg-indigo-400 login&register"
                     >
-                        Register
+                        {t("Register")}
                     </button>
                 </form>
             </div>

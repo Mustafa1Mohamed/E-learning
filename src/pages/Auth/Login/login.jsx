@@ -2,8 +2,11 @@ import { useState, useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
 import GlobalMessage from "../../../components/GlobalMessage";
+import { useTranslation } from "react-i18next";
 
 function Login() {
+    const { t, i18n } = useTranslation();
+    const direction = i18n.dir();
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -32,9 +35,9 @@ function Login() {
                 setErrors((prev) => ({
                     ...prev,
                     emailErr: !value
-                        ? "Email is required"
+                        ? t("Email is required")
                         : !emailPattern.test(value)
-                            ? "Email is invalid"
+                            ? t("Email is invalid")
                             : "",
                 }));
                 break;
@@ -43,11 +46,11 @@ function Login() {
                 setErrors((prev) => ({
                     ...prev,
                     passErr: !value
-                        ? "Password is required"
+                        ? t("Password is required")
                         : value.length < 8
-                            ? "Password must be at least 8 characters"
+                            ? t("Password must be at least 8 characters")
                             : !passwordPattern.test(value)
-                                ? "Password must contain at least one uppercase letter, one lowercase letter, one number and one special character"
+                                ? t("Password must contain at least one uppercase letter, one lowercase letter, one number and one special character")
                                 : "",
                 }));
                 break;
@@ -64,9 +67,9 @@ function Login() {
         if (!email || !password) {
             setErrors((prev) => ({
                 ...prev,
-                emailErr: !email ? "Email is required" : prev.emailErr,
-                passErr: !password ? "Password is required" : prev.passErr,
-                globalErr: "Please fill in all required fields.",
+                emailErr: !email ? t("Email is required") : prev.emailErr,
+                passErr: !password ? t("Password is required") : prev.passErr,
+                globalErr: t("Please fill in all required fields."),
             }));
             return;
         }
@@ -79,7 +82,7 @@ function Login() {
         if (!user) {
             setErrors((prev) => ({
                 ...prev,
-                globalErr: "Invalid credentials. Please check your email or password.",
+                globalErr: t("Invalid credentials. Please check your email or password."),
                 emailErr: " ",
                 passErr: " ",
             }));
@@ -88,7 +91,7 @@ function Login() {
 
         localStorage.setItem("currentUser", JSON.stringify(user));
         window.dispatchEvent(new Event("userChange"));
-        setSuccessMsg("Logged in successfully! Redirecting...");
+        setSuccessMsg(t("Logged in successfully! Redirecting..."));
 
         setTimeout(() => {
             navigate("/");
@@ -121,9 +124,9 @@ function Login() {
         }`;
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gray-100">
+        <div dir={direction} className="min-h-screen flex items-center justify-center bg-gray-100">
             <div className="max-w-lg w-full bg-white shadow-lg rounded-xl p-6">
-                <h1 className="text-2xl font-bold text-indigo-500 mb-6 text-center">Login</h1>
+                <h1 className="text-2xl font-bold text-indigo-500 mb-6 text-center">{t("Login")}</h1>
 
                 {errors.globalErr && (
                     <GlobalMessage type="error" message={errors.globalErr} onClose={handleCloseGlobalError} />
@@ -132,9 +135,9 @@ function Login() {
                     <GlobalMessage type="success" message={successMsg} onClose={handleCloseSuccess} />
                 )}
 
-                <form className="space-y-6" onSubmit={handleSubmit}>
+                <form dir={direction} className="space-y-6" onSubmit={handleSubmit}>
 
-                    <div className="relative">
+                    <div dir={direction} className="relative">
                         <input
                             type="email"
                             name="email"
@@ -144,15 +147,15 @@ function Login() {
                             className={inputClass(errors.emailErr, form.email)}
                         />
                         <label htmlFor="email" className={labelClass(errors.emailErr, form.email)}>
-                            Email Address
+                            {t("Email Address")}
                         </label>
                         {errors.emailErr ? (
                             <p className="mt-2 text-xs text-red-600">
-                                <span className="font-medium">Oh, snap!</span> {errors.emailErr}
+                                <span className="font-medium">{t("Oh, snap!")}</span> {errors.emailErr}
                             </p>
                         ) : form.email ? (
                             <p className="mt-2 text-xs text-green-600">
-                                <span className="font-medium">Well done!</span> Looks good.
+                                <span className="font-medium">{t("Well done!")}</span> {t("Looks good.")}
                             </p>
                         ) : null}
                     </div>
@@ -168,12 +171,12 @@ function Login() {
                             className={inputClass(errors.passErr, form.password)}
                         />
                         <label htmlFor="password" className={labelClass(errors.passErr, form.password)}>
-                            Password
+                            {t("Password")}
                         </label>
                         <button
                             type="button"
                             onClick={handleTogglePassword}
-                            className="absolute inset-y-0 right-3 flex items-center text-gray-500 hover:text-gray-700"
+                            className={`absolute inset-y-0 ${direction==="rtl"?"left-3":"right-3"} flex items-center text-gray-500 hover:text-gray-700 pb-6`}
                         >
                             {showPassword ? (
                                 <EyeSlashIcon className="h-5 w-5" />
@@ -183,20 +186,20 @@ function Login() {
                         </button>
                         {errors.passErr ? (
                             <p className="mt-2 text-xs text-red-600">
-                                <span className="font-medium">Oh, snap!</span> {errors.passErr}
+                                <span className="font-medium">{t("Oh, snap!")}</span> {errors.passErr}
                             </p>
                         ) : form.password ? (
                             <p className="mt-2 text-xs text-green-600">
-                                <span className="font-medium">Well done!</span> Password looks good.
+                                <span className="font-medium">{t("Well done!")}</span> {t("Password looks good.")}
                             </p>
                         ) : null}
                     </div>
 
 
                     <div>
-                        <span>Don&apos;t have an account? </span>
+                        <span>{t("Don't have an account?")} </span>
                         <NavLink to="/register" className="text-sm text-indigo-500 hover:underline">
-                            Register
+                            {t("Register")}
                         </NavLink>
                     </div>
                     <button
@@ -205,7 +208,7 @@ function Login() {
                              bg-indigo-500 hover:bg-indigo-400
                             }`}
                     >
-                        Login
+                        {t("Login")}
                     </button>
                 </form>
             </div>

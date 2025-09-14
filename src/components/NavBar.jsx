@@ -113,9 +113,17 @@ function Navbar() {
               </button>
             </>
           ) : (
-            <NavLink to="/login" className="text-sm font-semibold text-black">
-              {t("login")} <span aria-hidden="true">&rarr;</span>
-            </NavLink>
+              <>
+                <span dir={locale === 'ar' ? 'rtl' : 'ltr'}
+                  onClick={() => handleLanguageclick()}
+                  className="cursor-pointer text-left rounded-lg px-3 py-2 text-base font-semibold text-black hover:bg-gray-200"
+                >
+                  {locale === 'en' ? 'Arabic' : 'الإنجليزية'}
+                </span>
+                <NavLink to="/login" className="text-sm font-semibold text-black">
+                  {t("Login")} <span aria-hidden="true">&rarr;</span>
+                </NavLink>
+              </>
           )}
         </div>
       </nav>
@@ -203,12 +211,21 @@ function Navbar() {
                     </button>
                   </>
                 ) : (
+                    <>
+                      <span dir={locale === 'ar' ? 'rtl' : 'ltr'}
+                onClick={() => handleLanguageclick()}
+                className="cursor-pointer text-left rounded-lg px-3 py-2 text-base font-semibold text-black hover:bg-gray-200"
+              >
+                {locale === 'en' ? 'Arabic' : 'الإنجليزية'}
+              </span>
                   <NavLink
                     to="/login"
                     className="block rounded-lg px-3 py-2.5 text-base font-semibold text-black hover:bg-gray-200 hover:text-indigo-600"
                   >
                     {t("Login")}
-                  </NavLink>
+                      </NavLink>
+                    </>
+
                 )}
                 
               </div>
