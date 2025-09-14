@@ -43,7 +43,7 @@ function CourseDetails() {
   if (!course) {
     return (
       <div className="container mx-auto text-center mt-20 text-gray-500">
-        Loading...
+        {t("Loading...")}
       </div>
     );
   }

@@ -101,7 +101,7 @@ function Navbar() {
               </span>
               <span dir={locale === 'ar' ? 'rtl' : 'ltr'}
                 onClick={() => handleLanguageclick()}
-                className=" text-left rounded-lg px-3 py-2 text-base font-semibold text-black hover:bg-gray-200"
+                className="cursor-pointer text-left rounded-lg px-3 py-2 text-base font-semibold text-black hover:bg-gray-200"
               >
                 {locale === 'en' ? 'Arabic' : 'الإنجليزية'}
               </span>
