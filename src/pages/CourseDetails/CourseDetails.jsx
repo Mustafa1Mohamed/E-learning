@@ -30,9 +30,9 @@ function CourseDetails() {
   };
 
   const handleToggleWishlist = () => {
-          if (!currentUser) return navigate("/login");
-          dispatch(toggleWhishlist(course));
-      };
+    if (!currentUser) return navigate("/login");
+    dispatch(toggleWhishlist(course));
+  };
   useEffect(() => {
     axios
       .get(`https://retoolapi.dev/dL2nNn/data/${id}`)
@@ -49,7 +49,7 @@ function CourseDetails() {
   }
 
   return (
-    <div  dir={direction} className="container mx-auto mt-20 px-6">
+    <div dir={direction} className="container mx-auto mt-20 px-6">
       <div className="bg-white shadow-lg rounded-lg overflow-hidden flex flex-col md:flex-row">
         {/* img */}
         <div className="md:w-1/3">
