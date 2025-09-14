@@ -5,9 +5,9 @@ import Title from "../../components/Title";
 import { useTranslation } from "react-i18next";
 
 function Courses() {
-    const [courses, setCourses] = useState([]);
     const { t, i18n } = useTranslation();
     const direction = i18n.dir();
+    const [courses, setCourses] = useState([]);
     const API_URL = "https://retoolapi.dev/dL2nNn/data";
 
     useEffect(() => {
@@ -23,14 +23,15 @@ function Courses() {
         <div className="bg-gray-50 py-6 px-16">
             <div className="container mx-auto px-4 pt-24">
                 <Title />
+                {/* Courses */}
                 <div dir={direction} className="mt-6 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {courses && courses.length > 0 ? (
                         courses.map((course) => (
                             <Card
                                 key={course.id}
                                 id={course.id}
-                                course_name={course.course_name}
-                                course_plan={course.course_plan}
+                                course_name={t(course.course_name)}
+                                course_plan={t(course.course_plan)}
                                 course_image={course.course_image}
                                 course_price={course.course_price}
                                 
@@ -38,7 +39,7 @@ function Courses() {
                             />
                         ))
                     ) : (
-                        <p className="text-gray-500">{t("No courses found.")}</p>
+                        <p className="text-gray-500">No courses found.</p>
                     )}
                 </div>
             </div>
