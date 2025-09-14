@@ -39,7 +39,7 @@ function Courses() {
                             />
                         ))
                     ) : (
-                        <p className="text-gray-500">No courses found.</p>
+                        <p className="text-gray-500">{t("No courses found.")}</p>
                     )}
                 </div>
             </div>
