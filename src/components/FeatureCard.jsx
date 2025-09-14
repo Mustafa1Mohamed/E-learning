@@ -1,6 +1,10 @@
+import { useTranslation } from "react-i18next";
+
 export default function FeatureCard({ icon, title, description, link }) {
+  const { t, i18n } = useTranslation();
+  const direction = i18n.dir();
   return (
-    <div className=" text-center py-6 px-8 mt-8  rounded-lg shadow-md hover:shadow-md transition">
+    <div dir={direction} className=" text-center py-6 px-8 mt-8  rounded-lg shadow-md hover:shadow-md transition">
       <div className="flex justify-center items-center h-16 w-16 mx-auto text-4xl text-indigo-600 mb-4">
         {icon}
       </div>
@@ -11,7 +15,7 @@ export default function FeatureCard({ icon, title, description, link }) {
           href={link}
           className="text-indigo-600 font-medium hover:underline"
         >
-          Read More →
+          {t("Learn More")} →
         </a>
       )}
     </div>
