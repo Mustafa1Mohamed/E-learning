@@ -5,10 +5,11 @@ import { HeartIcon as SolidHeart } from "@heroicons/react/24/solid";
 import { HeartIcon as OutlineHeart } from "@heroicons/react/24/outline";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleFav } from "../../Store/actions/FavAction";
+import { toggleWhishlist } from "../../Store/actions/WhishListAction";
 import { useTranslation } from "react-i18next";
 
 function CourseDetails() {
-  const { t, i18n } = useTranslation()
+  const { t, i18n } = useTranslation();
   const direction = i18n.dir()
   const { id } = useParams();
   const [course, setCourse] = useState(null);
@@ -18,7 +19,8 @@ function CourseDetails() {
   const favorites = useSelector((state) => state.FavReducers.favorites);
   const currentUser = JSON.parse(localStorage.getItem("currentUser"));
   const isFavorite = favorites.some((c) => c.id === parseInt(id));
-
+  const whishlist = useSelector((state) => state.WhishlistReducer.whishlist);
+  const isInWishlist = whishlist.some((c) => c.id === parseInt(id));
   const handleToggleFavorite = () => {
     if (!currentUser) {
       navigate("/login");
@@ -27,6 +29,10 @@ function CourseDetails() {
     dispatch(toggleFav(course));
   };
 
+  const handleToggleWishlist = () => {
+          if (!currentUser) return navigate("/login");
+          dispatch(toggleWhishlist(course));
+      };
   useEffect(() => {
     axios
       .get(`https://retoolapi.dev/dL2nNn/data/${id}`)
@@ -85,8 +91,25 @@ function CourseDetails() {
                 <button className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-500">
                   {t("Add to Cart")}
                 </button>
-                <button className="px-4 py-2 bg-yellow-500 text-white rounded-md hover:bg-yellow-400">
+                <button onClick={handleToggleWishlist} className="px-4 py-2 bg-yellow-500 text-white rounded-md hover:bg-yellow-400 flex gap-2">
                   {t("Add to Wishlist")}
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill={isInWishlist ? "white" : "none"}
+                    viewBox="0 0 24 24"
+                    strokeWidth="1.5"
+                    stroke="currentColor"
+                    className="w-5 h-5"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M17.593 3.322c1.1.128 1.907 1.077 
+                   1.907 2.185V21L12 17.25 4.5 21V5.507
+                   c0-1.108.806-2.057 1.907-2.185a48.507 
+                   48.507 0 0 1 11.186 0Z"
+                    />
+                  </svg>
                 </button>
               </>
             ) : (
