@@ -5,8 +5,11 @@ import { HeartIcon as SolidHeart } from "@heroicons/react/24/solid";
 import { HeartIcon as OutlineHeart } from "@heroicons/react/24/outline";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleFav } from "../../Store/actions/FavAction";
+import { useTranslation } from "react-i18next";
 
 function CourseDetails() {
+  const { t, i18n } = useTranslation()
+  const direction = i18n.dir()
   const { id } = useParams();
   const [course, setCourse] = useState(null);
 
@@ -40,13 +43,13 @@ function CourseDetails() {
   }
 
   return (
-    <div className="container mx-auto mt-20 px-6">
+    <div  dir={direction} className="container mx-auto mt-20 px-6">
       <div className="bg-white shadow-lg rounded-lg overflow-hidden flex flex-col md:flex-row">
         {/* img */}
         <div className="md:w-1/3">
           <img
             src={course.course_image}
-            alt={course.course_name}
+            alt={t(course.course_name)}
             className="w-full h-full object-cover"
           />
         </div>
@@ -56,7 +59,7 @@ function CourseDetails() {
           <div>
             <div className="flex items-center gap-4">
               <h1 className="text-2xl font-bold text-gray-900 mb-4">
-                {course.course_name}
+                {t(course.course_name)}
               </h1>
               {/* Heart Toggle */}
               <button onClick={handleToggleFavorite}>
@@ -68,8 +71,8 @@ function CourseDetails() {
               </button>
             </div>
 
-            <p className="text-sm text-gray-500 mb-2">{course.course_plan}</p>
-            <p className="text-gray-700 mb-4">{course.course_description}</p>
+            <p className="text-sm text-gray-500 mb-2">{t(course.course_plan)}</p>
+            <p className="text-gray-700 mb-4">{t(course.course_description)}</p>
             <p className="text-lg font-semibold text-indigo-600">
               ${course.course_price}
             </p>
@@ -80,10 +83,10 @@ function CourseDetails() {
             {currentUser ? (
               <>
                 <button className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-500">
-                  Add to Cart
+                  {t("Add to Cart")}
                 </button>
                 <button className="px-4 py-2 bg-yellow-500 text-white rounded-md hover:bg-yellow-400">
-                  Add to Wishlist
+                  {t("Add to Wishlist")}
                 </button>
               </>
             ) : (
@@ -92,13 +95,13 @@ function CourseDetails() {
                   onClick={() => navigate("/login")}
                   className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-500"
                 >
-                  Add to Cart
+                  {t("Add to Cart")}
                 </button>
                 <button
                   onClick={() => navigate("/login")}
                   className="px-4 py-2 bg-yellow-500 text-white rounded-md hover:bg-yellow-400"
                 >
-                  Add to Wishlist
+                  {t("Add to Wishlist")}
                 </button>
               </>
             )}
