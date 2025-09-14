@@ -1,4 +1,4 @@
-import React, { use, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useTranslation } from 'react-i18next';
 import { NavLink, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -39,13 +39,13 @@ function Navbar() {
     navigate("/login");
   };
   return (
-    <header className="absolute inset-x-0 top-0 z-50">
+    <header dir={i18n.dir()} id="header" className="absolute inset-x-0 top-0 z-50">
       <nav
         aria-label="Global"
         className="flex items-center justify-between p-4 lg:px-8 bg-gray-100 shadow-md"
       >
         {/* Logo */}
-        <div className="flex lg:flex-1"> <NavLink to="@" className="-m-1.5 p-1.5 flex items-center"> <span className="text-2xl font-bold text-indigo-600"> E-Learning </span> </NavLink> </div>
+        <div className="flex lg:flex-1 cursor-pointer"><span className="text-2xl font-bold text-indigo-600"> {t("E-Learning")} </span></div>
 
         {/* Mobile Menu Button */}
         <div className="flex lg:hidden">

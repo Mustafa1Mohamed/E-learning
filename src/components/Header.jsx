@@ -1,8 +1,9 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import headerImg from "../header.png"; 
-
+import { useTranslation } from 'react-i18next';
 function Header() {
+  const { t } = useTranslation();
   return (
     <div
       className="relative isolate px-6 pt-14 lg:px-8 bg-gray-900"
@@ -30,11 +31,10 @@ function Header() {
       <div className="mx-auto max-w-2xl py-32 sm:py-48 lg:py-56">
         <div className="relative z-10 flex flex-col items-center justify-center h-full text-center">
           <h1 className="text-5xl font-semibold tracking-tight text-white sm:text-7xl">
-            Best online <br /> Learning system
+            {t("Best online Learning system")}
           </h1>
           <p className="mt-8 text-lg font-medium text-gray-400 sm:text-xl">
-            Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure qui
-            lorem cupidatat commodo. Elit sunt amet fugiat veniam occaecat.
+            {t("Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure qui lorem cupidatat commodo. Elit sunt amet fugiat veniam occaecat.")}
           </p>
           <div className="mt-10 flex items-center justify-center gap-x-6">
             <NavLink
@@ -45,7 +45,7 @@ function Header() {
                          focus-visible:outline-offset-2 
                          focus-visible:outline-indigo-500"
             >
-              Read More
+              {t("Read More")}
             </NavLink>
           </div>
         </div>

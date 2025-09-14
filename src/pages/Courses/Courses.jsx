@@ -2,9 +2,11 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Card from "../../components/Card";
 import Title from "../../components/Title";
+import { useTranslation } from "react-i18next";
 
 function Courses() {
     const [courses, setCourses] = useState([]);
+    const { t } = useTranslation();
 
     const API_URL = "https://retoolapi.dev/dL2nNn/data";
 
@@ -21,7 +23,6 @@ function Courses() {
         <div className="bg-gray-50 py-6 px-16">
             <div className="container mx-auto px-4 pt-24">
                 <Title />
-                {/* Courses */}
                 <div className="mt-6 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {courses && courses.length > 0 ? (
                         courses.map((course) => (
@@ -36,7 +37,7 @@ function Courses() {
                             />
                         ))
                     ) : (
-                        <p className="text-gray-500">No courses found.</p>
+                        <p className="text-gray-500">{t("No courses found.")}</p>
                     )}
                 </div>
             </div>

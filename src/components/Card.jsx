@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toggleFav } from "../Store/actions/FavAction";
 import { toggleWhishlist } from "../Store/actions/WhishListAction";
+import { useTranslation } from "react-i18next";
 export default function Card({
     id,
     course_name,
@@ -15,6 +16,8 @@ export default function Card({
     path,
     isFavoritesPage = false,
 }) {
+    const { t, i18n } = useTranslation();
+    const direction = i18n.dir();
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const favorites = useSelector((state) => state.FavReducers.favorites);
@@ -56,23 +59,20 @@ export default function Card({
         );
     };
     return (
-        <div className="bg-white shadow-md rounded-lg overflow-hidden flex flex-col">
-            {/* Image */}
+        <div dir={direction} className="bg-white shadow-md rounded-lg overflow-hidden flex flex-col">
+      
             <img
                 src={course_image}
                 alt={course_name}
                 className="h-48 w-full object-cover"
             />
 
-            {/* Content */}
             <div className="flex flex-col flex-1 p-6 justify-between">
-                {/* Title + Price + Heart */}
                 <div className="flex items-center justify-between mt-2">
                     <div className="flex items-center gap-2">
                         <h3 className="text-lg font-bold text-gray-900 me-2">
-                            <Link to={path}>{course_name}</Link>
+                            <Link to={path}>{t(course_name)}</Link>
                         </h3>
-                        {/* Heart Toggle */}
                         <button onClick={handleToggleFavorite}>
                             {isFavorite ? (
                                 <SolidHeart className="h-6 w-6 text-red-500" />
@@ -91,34 +91,33 @@ export default function Card({
 
                 {course_description && (
                     <p className="text-sm text-gray-500 line-clamp-3 mt-2">
-                        {course_description}
+                        {t(course_description)}
                     </p>
                 )}
 
                 {course_plan && (
                     <p className="text-sm text-gray-700 font-medium my-1">
-                        {course_plan}
+                        {t(course_plan)}
                     </p>
                 )}
 
-                {/* Buttons Section */}
                 <div className="flex flex-col gap-3 mt-5">
                     {path && (
                         <Link
                             to={path}
                             className="text-md text-center font-medium text-white bg-indigo-600 hover:bg-indigo-500 px-3 py-2 rounded-md"
                         >
-                            View
+                            {t("View Details")}
                         </Link>
                     )}
 
                     {currentUser ? (!isFavoritesPage && (
                         <button className="text-md text-center font-medium text-white bg-green-600 hover:bg-green-500 px-3 py-2 rounded-md">
-                            Add to Cart
+                            {t("Add to Cart")}
                         </button>
                     )) : (
                         <Link to="/login" className="text-md text-center font-medium text-white bg-green-600 hover:bg-green-500 px-3 py-2 rounded-md">
-                            Add to Cart
+                            {t("Add to Cart")}
                         </Link>
                     )}
                     {currentUser ? (!isFavoritesPage && (
@@ -126,7 +125,7 @@ export default function Card({
                             className={`flex justify-center items-center gap-x-2 text-md text-center font-medium text-white bg-yellow-500 hover:bg-yellow-400 px-3 py-2 rounded-md`}
                             onClick={handleToggleWishlist}
                         >
-                            <span>Add to Wishlist</span>
+                            <span>{t("Add to Wishlist")}</span>
                             <svg xmlns="http://www.w3.org/2000/svg" fill={isInWishlist ? "white" : "none"} viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-5 h-5">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0 1 11.186 0Z" />
                             </svg>
@@ -134,7 +133,7 @@ export default function Card({
                     )) : (
 
                         <Link to="/login" className="text-md text-center font-medium text-white bg-yellow-500 hover:bg-yellow-400 px-3 py-2 rounded-md">
-                            Add to Wishlist
+                            {t("Add to Wishlist")}
                         </Link>
                     )}
                 </div>
