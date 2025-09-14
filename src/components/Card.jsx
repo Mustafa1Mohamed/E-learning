@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { toggleFav } from "../Store/actions/FavAction";
 import { toggleWhishlist } from "../Store/actions/WhishListAction";
 import { useTranslation } from "react-i18next";
+
 export default function Card({
     id,
     course_name,
@@ -46,9 +47,10 @@ export default function Card({
         dispatch(toggleWhishlist(coursePayload));
     };
 
-    const renderActionButton = (label, onClick, bgColor, icon = null) =>
+    // updated renderActionButton with alwaysShow flag
+    const renderActionButton = (label, onClick, bgColor, icon = null, alwaysShow = false) =>
         currentUser ? (
-            !isFavoritesPage && (
+            (alwaysShow || !isFavoritesPage) && (
                 <button
                     onClick={onClick}
                     className={`flex justify-center items-center gap-x-2 text-md text-center font-medium text-white ${bgColor} hover:opacity-90 px-3 py-2 rounded-md`}
@@ -67,8 +69,10 @@ export default function Card({
         );
 
     return (
-        <div dir={direction} className="bg-white shadow-md rounded-lg overflow-hidden flex flex-col">
-      
+        <div
+            dir={direction}
+            className="bg-white shadow-md rounded-lg overflow-hidden flex flex-col"
+        >
             <img
                 src={course_image}
                 alt={course_name}
@@ -98,75 +102,34 @@ export default function Card({
                     )}
                 </div>
 
-
                 {course_description && (
                     <p className="text-sm text-gray-500 line-clamp-3 mt-2">
                         {t(course_description)}
                     </p>
                 )}
 
-
                 {course_plan && (
                     <p className="text-sm text-gray-700 font-medium my-1">
                         {t(course_plan)}
                     </p>
                 )}
-                {course_description && (
-                    <p className="text-sm text-gray-500 line-clamp-3 mt-2">
-                        {course_description}
-                    </p>
-                )}
 
                 <div className="flex flex-col gap-3 mt-5">
-                    {path && (
-                        <Link
-                            to={path}
-                            className="text-md text-center font-medium text-white bg-indigo-600 hover:bg-indigo-500 px-3 py-2 rounded-md"
-                        >
-                            {t("View Details")}
-                        </Link>
-
-                {/* Buttons */}
-                <div className="flex flex-col gap-3 mt-5">
-                    {/* View Details */}
+                    {/* View Details (always visible, even on favorites page) */}
                     {renderActionButton(
-                        "View Details",
+                        t("View Details"),
                         () => navigate(path),
-                        "bg-indigo-600"
-
+                        "bg-indigo-600",
+                        null,
+                        true //
                     )}
-                    {/* Add to Cart */}
-                    {renderActionButton("Add to Cart", () => { }, "bg-green-600")}
 
+                  
+                    {renderActionButton(t("Add to Cart"), () => { }, "bg-green-600")}
 
-                    {currentUser ? (!isFavoritesPage && (
-                        <button className="text-md text-center font-medium text-white bg-green-600 hover:bg-green-500 px-3 py-2 rounded-md">
-                            {t("Add to Cart")}
-                        </button>
-                    )) : (
-                        <Link to="/login" className="text-md text-center font-medium text-white bg-green-600 hover:bg-green-500 px-3 py-2 rounded-md">
-                            {t("Add to Cart")}
-                        </Link>
-                    )}
-                    {currentUser ? (!isFavoritesPage && (
-                        <button
-                            className={`flex justify-center items-center gap-x-2 text-md text-center font-medium text-white bg-yellow-500 hover:bg-yellow-400 px-3 py-2 rounded-md`}
-                            onClick={handleToggleWishlist}
-                        >
-                            <span>{t("Add to Wishlist")}</span>
-                            <svg xmlns="http://www.w3.org/2000/svg" fill={isInWishlist ? "white" : "none"} viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-5 h-5">
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0 1 11.186 0Z" />
-                            </svg>
-                        </button>
-                    )) : (
-
-                        <Link to="/login" className="text-md text-center font-medium text-white bg-yellow-500 hover:bg-yellow-400 px-3 py-2 rounded-md">
-                            {t("Add to Wishlist")}
-                        </Link>
-
-                    {/* Add to Wishlist */}
+                   
                     {renderActionButton(
-                        "Add to Wishlist",
+                        t("Add to Wishlist"),
                         handleToggleWishlist,
                         "bg-yellow-500",
                         <svg
@@ -180,10 +143,12 @@ export default function Card({
                             <path
                                 strokeLinecap="round"
                                 strokeLinejoin="round"
-                                d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0 1 11.186 0Z"
+                                d="M17.593 3.322c1.1.128 1.907 1.077 
+                   1.907 2.185V21L12 17.25 4.5 21V5.507
+                   c0-1.108.806-2.057 1.907-2.185a48.507 
+                   48.507 0 0 1 11.186 0Z"
                             />
                         </svg>
-
                     )}
                 </div>
             </div>

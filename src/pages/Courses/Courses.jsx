@@ -6,7 +6,8 @@ import { useTranslation } from "react-i18next";
 
 function Courses() {
     const [courses, setCourses] = useState([]);
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
+    const direction = i18n.dir();
     const API_URL = "https://retoolapi.dev/dL2nNn/data";
 
     useEffect(() => {
@@ -22,7 +23,7 @@ function Courses() {
         <div className="bg-gray-50 py-6 px-16">
             <div className="container mx-auto px-4 pt-24">
                 <Title />
-                <div className="mt-6 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div dir={direction} className="mt-6 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {courses && courses.length > 0 ? (
                         courses.map((course) => (
                             <Card

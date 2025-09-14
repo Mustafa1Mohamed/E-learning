@@ -75,20 +75,21 @@ function Navbar() {
         {/* Desktop Menu */}
 
         <div dir={locale === 'ar' ? 'rtl' : 'ltr'} className="hidden lg:flex lg:gap-x-12">
-        <div className="hidden lg:flex lg:gap-x-12 align-content-center">
-          <NavLink to="/" className="text-sm font-semibold text-black">
-            {t("Home")}
-          </NavLink>
-          <NavLink to="/courses" className="text-sm font-semibold text-black">
-            {t("Courses")}
-          </NavLink>
-          <NavLink to="/favourite" className="text-sm font-semibold text-black">
-            {t("Favorites")}{" "}
-            <span className="text-xs text-gray-500">({favorite.length})</span>
-          </NavLink>
-          <NavLink to="/whishlist" className="text-sm font-semibold text-black">
-            {t("Wishlist")}
-          </NavLink>
+          <div className="hidden lg:flex lg:gap-x-12 align-content-center">
+            <NavLink to="/" className="text-sm font-semibold text-black">
+              {t("Home")}
+            </NavLink>
+            <NavLink to="/courses" className="text-sm font-semibold text-black">
+              {t("Courses")}
+            </NavLink>
+            <NavLink to="/favourite" className="text-sm font-semibold text-black">
+              {t("Favorites")}{" "}
+              <span className="text-xs text-gray-500">({favorite.length})</span>
+            </NavLink>
+            <NavLink to="/whishlist" className="text-sm font-semibold text-black">
+              {t("Wishlist")}
+            </NavLink>
+          </div>
         </div>
 
         {/* Desktop Login/User */}
