@@ -73,7 +73,9 @@ function Navbar() {
         </div>
 
         {/* Desktop Menu */}
+
         <div dir={locale === 'ar' ? 'rtl' : 'ltr'} className="hidden lg:flex lg:gap-x-12">
+        <div className="hidden lg:flex lg:gap-x-12 align-content-center">
           <NavLink to="/" className="text-sm font-semibold text-black">
             {t("Home")}
           </NavLink>
