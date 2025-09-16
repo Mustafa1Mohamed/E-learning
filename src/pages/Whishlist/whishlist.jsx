@@ -5,7 +5,6 @@ function Wishlist() {
     const { t, i18n } = useTranslation();
     const direction = i18n.dir();
     const whishlist = useSelector((state) => state.WhishlistReducer.whishlist);
-    console.log(whishlist);
     return (
             <div dier={direction} className="bg-gray-50 py-6 px-16 min-h-screen">
                 <div className="container mx-auto px-4 pt-24">

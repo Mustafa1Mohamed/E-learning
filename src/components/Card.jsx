@@ -98,7 +98,7 @@ export default function Card({
                     </button>
 
                     {/* Wishlist */}
-                    <button
+                    {!isFavoritesPage &&<button
                         onClick={handleToggleWishlist}
                         className="p-2 bg-white/80 rounded-full shadow hover:bg-white"
                     >
@@ -119,7 +119,7 @@ export default function Card({
                                 48.507 0 0 1 11.186 0Z"
                             />
                         </svg>
-                    </button>
+                    </button>}
                 </div>
             </div>
 

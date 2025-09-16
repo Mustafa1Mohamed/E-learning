@@ -85,6 +85,7 @@ function Courses() {
                 course_image={course.course_image}
                 course_price={course.course_price}
                 path={`/courses/${course.id}`}
+                isFavoritesPage={false}
               />
             ))
           ) : (
