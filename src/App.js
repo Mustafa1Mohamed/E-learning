@@ -1,5 +1,5 @@
 import './App.css';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 import Login from './pages/Auth/Login/login.jsx';
 import Register from './pages/Auth/Register/register.jsx';
 import Home from './pages/Home/Home.jsx';
@@ -22,7 +22,8 @@ function App() {
           <Route path='/whishlist' element={<Wishlist />} />
           <Route path='/login' element={<Login />} />
           <Route path='/register' element={<Register />} />
-          <Route path='*' element={<NotFound />} />
+          <Route path='/not-found' element={<NotFound />} />
+          <Route path='*' element={<Navigate to='/not-found' replace />} />
         </Routes>
       </BrowserRouter>
     </div>
