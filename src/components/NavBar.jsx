@@ -12,12 +12,12 @@ function Navbar() {
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
 
-
   const handleLanguageclick = () => {
     const newLocale = locale === 'en' ? 'ar' : 'en';
     setLocale(newLocale);
     i18n.changeLanguage(newLocale);
   }
+
   useEffect(() => {
     i18n.changeLanguage(locale);
   }, [i18n, locale]);
@@ -38,6 +38,7 @@ function Navbar() {
     setUser(null);
     navigate("/login");
   };
+
   return (
     <header dir={i18n.dir()} id="header" className="absolute inset-x-0 top-0 z-50">
       <nav
@@ -73,7 +74,6 @@ function Navbar() {
         </div>
 
         {/* Desktop Menu */}
-
         <div dir={locale === 'ar' ? 'rtl' : 'ltr'} className="hidden lg:flex lg:gap-x-12">
           <div className="hidden lg:flex lg:gap-x-12 align-content-center">
             <NavLink to="/" className="text-sm font-semibold text-black">
@@ -113,27 +113,29 @@ function Navbar() {
               </button>
             </>
           ) : (
-              <>
-                <span dir={locale === 'ar' ? 'rtl' : 'ltr'}
-                  onClick={() => handleLanguageclick()}
-                  className="cursor-pointer text-left rounded-lg px-3 py-2 text-base font-semibold text-black hover:bg-gray-200"
-                >
-                  {locale === 'en' ? 'Arabic' : 'الإنجليزية'}
-                </span>
-                <NavLink to="/login" className="text-sm font-semibold text-black">
-                  {t("Login")} <span aria-hidden="true">&rarr;</span>
-                </NavLink>
-              </>
+            <>
+              <span dir={locale === 'ar' ? 'rtl' : 'ltr'}
+                onClick={() => handleLanguageclick()}
+                className="cursor-pointer text-left rounded-lg px-3 py-2 text-base font-semibold text-black hover:bg-gray-200"
+              >
+                {locale === 'en' ? 'Arabic' : 'الإنجليزية'}
+              </span>
+              <NavLink to="/login" className="text-sm font-semibold text-black">
+                {t("Login")} <span aria-hidden="true">&rarr;</span>
+              </NavLink>
+            </>
           )}
         </div>
       </nav>
 
       {/* Mobile Menu Panel */}
       <div
-        className={`lg:hidden fixed inset-0 z-50 flex justify-end transform transition-transform duration-500 ease-in-out ${mobileMenuOpen ? "translate-x-0" : "translate-x-full"
+        className={`lg:hidden fixed inset-y-0 z-50 w-2/5 transform transition-transform duration-500 ease-in-out ${locale === 'ar'
+            ? `left-0 ${mobileMenuOpen ? "translate-x-0" : "-translate-x-full"}`
+            : `right-0 ${mobileMenuOpen ? "translate-x-0" : "translate-x-full"}`
           }`}
       >
-        <div className="w-2/5 h-full bg-gray-100 shadow-lg p-6">
+        <div className="w-full h-full bg-gray-100 shadow-lg p-6" dir={locale === 'ar' ? 'rtl' : 'ltr'}>
           {/* Header inside menu */}
           <div className="flex items-center justify-between">
             <span className="text-2xl font-bold text-indigo-600">
@@ -191,7 +193,7 @@ function Navbar() {
                   {t("Wishlist")}
                 </NavLink>
               </div>
-              <div dir={locale === 'ar' ? 'rtl' : 'ltr'} className="py-6">
+              <div className="py-6">
                 {user ? (
                   <>
                     <span className="block px-3 py-2 text-base font-semibold text-black">
@@ -211,23 +213,21 @@ function Navbar() {
                     </button>
                   </>
                 ) : (
-                    <>
-                      <span dir={locale === 'ar' ? 'rtl' : 'ltr'}
-                onClick={() => handleLanguageclick()}
-                className="cursor-pointer text-left rounded-lg px-3 py-2 text-base font-semibold text-black hover:bg-gray-200"
-              >
-                {locale === 'en' ? 'Arabic' : 'الإنجليزية'}
-              </span>
-                  <NavLink
-                    to="/login"
-                    className="block rounded-lg px-3 py-2.5 text-base font-semibold text-black hover:bg-gray-200 hover:text-indigo-600"
-                  >
-                    {t("Login")}
-                      </NavLink>
-                    </>
-
+                  <>
+                    <button
+                      onClick={() => handleLanguageclick()}
+                      className="block w-full text-left rounded-lg px-3 py-2 text-base font-semibold text-black hover:bg-gray-200"
+                    >
+                      {locale === 'en' ? 'Arabic' : 'الإنجليزية'}
+                    </button>
+                    <NavLink
+                      to="/login"
+                      className="block rounded-lg px-3 py-2.5 text-base font-semibold text-black hover:bg-gray-200 hover:text-indigo-600"
+                    >
+                      {t("Login")}
+                    </NavLink>
+                  </>
                 )}
-                
               </div>
             </div>
           </div>
