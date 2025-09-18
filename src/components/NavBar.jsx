@@ -56,7 +56,7 @@ function Navbar() {
         className={`flex items-center justify-between p-4 lg:px-8 ${navBgClass} shadow-md`}
       >
         {/* Logo */}
-  <div className="flex lg:flex-1 cursor-pointer"><span className={`text-2xl font-bold text-indigo-600 ${textClass}`}> {t("E-Learning")} </span></div>
+  <div className="flex lg:flex-1 cursor-pointer"><span className={`text-2xl font-bold text-indigo-600`}> {t("E-Learning")} </span></div>
 
         {/* Mobile Menu Button */}
         <div className="flex lg:hidden">
@@ -152,16 +152,16 @@ function Navbar() {
             : `right-0 ${mobileMenuOpen ? "translate-x-0" : "translate-x-full"}`
           }`}
       >
-        <div className="w-full h-full bg-gray-100 shadow-lg p-6" dir={locale === 'ar' ? 'rtl' : 'ltr'}>
+        <div className={`w-full h-full shadow-lg p-6 ${navBgClass}`} dir={locale === 'ar' ? 'rtl' : 'ltr'}>
           {/* Header inside menu */}
           <div className="flex items-center justify-between">
             <span className="text-2xl font-bold text-indigo-600">
-              E-Learning
+              {t('E-Learning')}
             </span>
             <button
               type="button"
               onClick={() => setMobileMenuOpen(false)}
-              className="-m-2.5 rounded-md p-2.5 text-gray-700"
+              className={`-m-2.5 rounded-md p-2.5 ${textClass}`}
             >
               <span className="sr-only">Close menu</span>
               <svg
@@ -183,48 +183,54 @@ function Navbar() {
 
           {/* NavLinks */}
           <div className="mt-6 flow-root">
-            <div className="-my-6 divide-y divide-gray-200">
+            <div className={`-my-6 divide-y ${textClass}`}>
               <div className="space-y-2 py-6">
                 <NavLink
                   to="/"
-                  className="block rounded-lg px-3 py-2 text-base font-semibold text-black hover:bg-gray-200 hover:text-indigo-600"
+                  className={`block rounded-lg px-3 py-2 text-base font-semibold ${textClass} hover:bg-gray-200 hover:text-indigo-600`}
                 >
                   {t("Home")}
                 </NavLink>
                 <NavLink
                   to="/courses"
-                  className="block rounded-lg px-3 py-2 text-base font-semibold text-black hover:bg-gray-200 hover:text-indigo-600"
+                  className={`block rounded-lg px-3 py-2 text-base font-semibold ${textClass} hover:bg-gray-200 hover:text-indigo-600`}
                 >
                   {t("Courses")}
                 </NavLink>
                 <NavLink
                   to="/favourite"
-                  className="block rounded-lg px-3 py-2 text-base font-semibold text-black hover:bg-gray-200 hover:text-indigo-600"
+                  className={`block rounded-lg px-3 py-2 text-base font-semibold ${textClass} hover:bg-gray-200 hover:text-indigo-600`}
                 >
                   {t("Favorites")}
                 </NavLink>
                 <NavLink
                   to="/whishlist"
-                  className="block rounded-lg px-3 py-2 text-base font-semibold text-black hover:bg-gray-200 hover:text-indigo-600"
+                  className={`block rounded-lg px-3 py-2 text-base font-semibold ${textClass} hover:bg-gray-200 hover:text-indigo-600`}
                 >
                   {t("Wishlist")}
                 </NavLink>
               </div>
               <div className="py-6">
+                <button
+                  onClick={handleThemeToggle}
+                  className={`w-full text-sm font-semibold px-3 py-2 rounded-lg ${textClass} hover:bg-gray-200 hover:text-indigo-600`}
+                >
+                  {theme === "Light" ? <FaMoon /> : <FaSun />}
+                </button>
                 {user ? (
                   <>
-                    <span className="block px-3 py-2 text-base font-semibold text-black">
+                    <span className={`block px-3 py-2 text-base font-semibold ${textClass}`}>
                       {t("Hello")}, {user.name}
                     </span>
                     <button
                       onClick={() => handleLanguageclick()}
-                      className="block w-full text-left rounded-lg px-3 py-2 text-base font-semibold text-black hover:bg-gray-200"
+                      className={`w-full text-start block rounded-lg px-3 py-2 text-base font-semibold ${textClass} hover:bg-gray-200 hover:text-indigo-600`}
                     >
                       {locale === 'en' ? 'Arabic' : 'الإنجليزية'}
                     </button>
                     <button
                       onClick={handleLogout}
-                      className="block w-full text-left rounded-lg px-3 py-2 text-base font-semibold text-red-600 hover:bg-gray-200"
+                      className={`w-full block rounded-lg px-3 py-2 text-base font-semibold text-red-600 hover:bg-gray-200 text-start`}
                     >
                       {t("Logout")}
                     </button>
