@@ -56,7 +56,7 @@ function Navbar() {
         className={`flex items-center justify-between p-4 lg:px-8 ${navBgClass} shadow-md`}
       >
         {/* Logo */}
-  <div className="flex lg:flex-1 cursor-pointer"><span className={`text-2xl font-bold text-indigo-600`}> {t("E-Learning")} </span></div>
+        <div className="flex lg:flex-1 cursor-pointer"><span className={`text-2xl font-bold text-indigo-600`}> {t("E-Learning")} </span></div>
 
         {/* Mobile Menu Button */}
         <div className="flex lg:hidden">
@@ -104,13 +104,13 @@ function Navbar() {
 
         {/* Desktop Login/User + Theme Toggle */}
         <div className="hidden lg:flex lg:flex-1 lg:justify-end items-center gap-4">
-          
-<button
-  onClick={handleThemeToggle}
-  className={`text-sm font-semibold px-3 py-2 rounded-lg ${textClass}`}
->
-  {theme === "Light" ? <FaMoon /> : <FaSun />}
-</button>
+
+          <button
+            onClick={handleThemeToggle}
+            className={`text-sm font-semibold px-3 py-2 rounded-lg ${textClass}`}
+          >
+            {theme === "Light" ? <FaMoon /> : <FaSun />}
+          </button>
           {user ? (
             <>
               <span dir={locale === 'ar' ? 'rtl' : 'ltr'} className={`text-sm font-semibold ${textClass}`}>
@@ -118,7 +118,7 @@ function Navbar() {
               </span>
               <span dir={locale === 'ar' ? 'rtl' : 'ltr'}
                 onClick={() => handleLanguageclick()}
-                className={`cursor-pointer text-left rounded-lg px-3 py-2 text-base font-semibold ${textClass} hover:bg-gray-200`}
+                className={`cursor-pointer text-left rounded-lg px-3 py-2 text-base font-semibold ${textClass}`}
               >
                 {locale === 'en' ? 'Arabic' : 'الإنجليزية'}
               </span>
@@ -130,17 +130,17 @@ function Navbar() {
               </button>
             </>
           ) : (
-              <>
-                <span dir={locale === 'ar' ? 'rtl' : 'ltr'}
-                  onClick={() => handleLanguageclick()}
-                  className={`cursor-pointer text-left rounded-lg px-3 py-2 text-base font-semibold ${textClass} hover:bg-gray-200`}
-                >
-                  {locale === 'en' ? 'Arabic' : 'الإنجليزية'}
-                </span>
-                <NavLink to="/login" className={`text-sm font-semibold ${textClass}`}>
-                  {t("Login")} <span aria-hidden="true">&rarr;</span>
-                </NavLink>
-              </>
+            <>
+              <span dir={locale === 'ar' ? 'rtl' : 'ltr'}
+                onClick={() => handleLanguageclick()}
+                className={`cursor-pointer text-left rounded-lg px-3 py-2 text-base font-semibold ${textClass} hover:bg-gray-200`}
+              >
+                {locale === 'en' ? 'Arabic' : 'الإنجليزية'}
+              </span>
+              <NavLink to="/login" className={`text-sm font-semibold ${textClass}`}>
+                {t("Login")} <span aria-hidden="true">&rarr;</span>
+              </NavLink>
+            </>
           )}
         </div>
       </nav>
@@ -148,8 +148,8 @@ function Navbar() {
       {/* Mobile Menu Panel */}
       <div
         className={`lg:hidden fixed inset-y-0 z-50 w-2/5 transform transition-transform duration-500 ease-in-out ${locale === 'ar'
-            ? `left-0 ${mobileMenuOpen ? "translate-x-0" : "-translate-x-full"}`
-            : `right-0 ${mobileMenuOpen ? "translate-x-0" : "translate-x-full"}`
+          ? `left-0 ${mobileMenuOpen ? "translate-x-0" : "-translate-x-full"}`
+          : `right-0 ${mobileMenuOpen ? "translate-x-0" : "translate-x-full"}`
           }`}
       >
         <div className={`w-full h-full shadow-lg p-6 ${navBgClass}`} dir={locale === 'ar' ? 'rtl' : 'ltr'}>
