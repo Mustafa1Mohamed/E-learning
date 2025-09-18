@@ -24,6 +24,9 @@ export default function Card({
     const favorites = useSelector((state) => state.FavReducers.favorites);
     const whishlist = useSelector((state) => state.WhishlistReducer.whishlist);
 
+    //  Theme from Redux
+    const theme = useSelector((state) => state.combineTheme.theme);
+
     const isFavorite = favorites.some((course) => course.id === id);
     const isInWishlist = whishlist.some((course) => course.id === id);
     const currentUser = JSON.parse(localStorage.getItem("currentUser"));
@@ -68,10 +71,15 @@ export default function Card({
         );
 
     return (
-        <div
-            dir={direction}
-            className="bg-white shadow-md rounded-lg overflow-hidden flex flex-col"
-        >
+      <div
+    dir={direction}
+    className={`${
+        theme === "Dark"
+            ? "bg-gray-800 text-white border border-gray-500"
+            : "bg-gray-100 text-gray-900 border"
+    } shadow-md rounded-lg overflow-hidden flex flex-col`}
+>
+
             {/* Image with blur overlay and icons */}
             <div className="relative">
                 <img
@@ -98,35 +106,38 @@ export default function Card({
                     </button>
 
                     {/* Wishlist */}
-                    {!isFavoritesPage &&<button
-                        onClick={handleToggleWishlist}
-                        className="p-2 bg-white/80 rounded-full shadow hover:bg-white"
-                    >
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill={isInWishlist ? "#facc15" : "none"}
-                            viewBox="0 0 24 24"
-                            strokeWidth="1.5"
-                            stroke="#facc15"
-                            className="w-5 h-5 "
+                    {!isFavoritesPage && (
+                        <button
+                            onClick={handleToggleWishlist}
+                            className="p-2 bg-white/80 rounded-full shadow hover:bg-white"
                         >
-                            <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                d="M17.593 3.322c1.1.128 1.907 1.077 
-                                1.907 2.185V21L12 17.25 4.5 21V5.507
-                                c0-1.108.806-2.057 1.907-2.185a48.507 
-                                48.507 0 0 1 11.186 0Z"
-                            />
-                        </svg>
-                    </button>}
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill={isInWishlist ? "#facc15" : "none"}
+                                viewBox="0 0 24 24"
+                                strokeWidth="1.5"
+                                stroke="#facc15"
+                                className="w-5 h-5 "
+                            >
+                                <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    d="M17.593 3.322c1.1.128 1.907 1.077 
+                                    1.907 2.185V21L12 17.25 4.5 21V5.507
+                                    c0-1.108.806-2.057 1.907-2.185a48.507 
+                                    48.507 0 0 1 11.186 0Z"
+                                />
+                            </svg>
+                        </button>
+                    )}
                 </div>
             </div>
 
             {/* Content */}
             <div className="flex flex-col flex-1 p-6 justify-between">
+
                 <div className="flex items-center justify-between mt-2">
-                    <h3 className="text-lg font-bold text-gray-900 me-2">
+                    <h3 className={`text-lg font-bold me-2 ${theme === 'Dark' ? 'text-white' : 'text-gray-900'}`}>
                         <Link to={path}>{t(course_name)}</Link>
                     </h3>
 
@@ -138,13 +149,13 @@ export default function Card({
                 </div>
 
                 {course_description && (
-                    <p className="text-sm text-gray-500 line-clamp-3 mt-2">
+                    <p className={`text-sm line-clamp-3 mt-2 ${theme === 'Dark' ? 'text-gray-300' : 'text-gray-500'}`}>
                         {t(course_description)}
                     </p>
                 )}
 
                 {course_plan && (
-                    <p className="text-sm text-gray-700 font-medium my-1">
+                    <p className={`text-sm font-medium my-1 ${theme === 'Dark' ? 'text-gray-200' : 'text-gray-700'}`}>
                         {t(course_plan)}
                     </p>
                 )}
@@ -169,4 +180,5 @@ export default function Card({
         </div>
     );
 }
+
 

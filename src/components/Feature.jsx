@@ -6,8 +6,8 @@ export default function Features() {
   const { t, i18n } = useTranslation()
   const direction = i18n.dir()
   return (
-    <section dir={direction} className="px-4 sm:px-9 lg:px-12 py-16">
-      <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+    <section dir={direction} className="px-4 sm:px-12 lg:px-15 py-16">
+      <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-9xl mx-auto">
         <FeatureCard
           icon={<FaUserTie />}
           title={t("Best Teachers")}

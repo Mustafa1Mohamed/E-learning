@@ -5,8 +5,11 @@ function Wishlist() {
     const { t, i18n } = useTranslation();
     const direction = i18n.dir();
     const whishlist = useSelector((state) => state.WhishlistReducer.whishlist);
+    const theme = useSelector(state => state.combineTheme.theme);
+    const themeBg = theme === 'Dark' ? 'bg-gray-800' : 'bg-gray-50';
+    const themeText = theme === 'Dark' ? 'dark:text-white' : '';
     return (
-            <div dier={direction} className="bg-gray-50 py-6 px-16 min-h-screen">
+            <div dir={direction} className={`${themeBg} ${themeText} py-6 px-16 min-h-screen`}>
                 <div className="container mx-auto px-4 pt-24">
                     <h1 className="text-3xl font-bold text-indigo-500 mb-6 text-center">{t("My Whishlist")}</h1>
                     <div dir={direction} className="mt-6 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
