@@ -3,10 +3,16 @@ import axios from "axios";
 import Card from "../../components/Card";
 import Title from "../../components/Title";
 import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
 
 function Courses() {
   const { t, i18n } = useTranslation();
   const direction = i18n.dir();
+
+  // get theme from redux
+  const theme = useSelector((state) => state.combineTheme.theme);
+  const themeBg = theme === "Dark" ? "bg-gray-800" : "bg-gray-50";
+  const themeText = theme === "Dark" ? "text-white" : "text-gray-900";
 
   const [courses, setCourses] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -52,7 +58,7 @@ function Courses() {
   };
 
   return (
-    <div className="bg-gray-50 py-6 px-16">
+    <div className={`${themeBg} ${themeText} py-6 px-16 min-h-screen`}>
       <div className="container mx-auto px-4 pt-24">
         <Title />
 
@@ -103,7 +109,7 @@ function Courses() {
               className={`px-3 py-1 rounded-lg border ${
                 currentPage === 1
                   ? "text-gray-400 border-gray-200 cursor-not-allowed"
-                  : "text-gray-700 border-gray-300 hover:bg-gray-200"
+                  : "text-gray-300 border-gray-300 hover:bg-gray-200"
               }`}
             >
               {t("Previous")}
@@ -127,7 +133,7 @@ function Courses() {
                     className={`px-3 py-1 rounded-lg border ${
                       currentPage === page
                         ? "bg-indigo-600 text-white border-indigo-600"
-                        : "text-gray-700 border-gray-300 hover:bg-gray-200"
+                        : "text-gray-300 border-gray-300 "
                     }`}
                   >
                     {page}
@@ -144,7 +150,7 @@ function Courses() {
               className={`px-3 py-1 rounded-lg border ${
                 currentPage === totalPages
                   ? "text-gray-400 border-gray-200 cursor-not-allowed"
-                  : "text-gray-700 border-gray-300 hover:bg-gray-200"
+                  : "text-gray-300 border-gray-300 hover:bg-gray-200"
               }`}
             >
               {t("Next")}
@@ -157,6 +163,8 @@ function Courses() {
 }
 
 export default Courses;
+
+
 
 
 

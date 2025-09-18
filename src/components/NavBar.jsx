@@ -1,13 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { useTranslation } from 'react-i18next';
 import { NavLink, useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { ThemeAction } from '../Store/actions/ThemeAction';
+import { FaMoon, FaSun } from "react-icons/fa";
+
 import "./NavBar.css";
 
 function Navbar() {
   const { t, i18n } = useTranslation();
   const [locale, setLocale] = useState('en');
   const favorite = useSelector((state) => state.FavReducers.favorites);
+  const theme = useSelector((state) => state.combineTheme.theme);
+  const dispatch = useDispatch();
+  const handleThemeToggle = () => {
+    dispatch(ThemeAction(theme === 'Light' ? 'Dark' : 'Light'));
+  };
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
@@ -38,14 +46,17 @@ function Navbar() {
     setUser(null);
     navigate("/login");
   };
+  // Determine theme classes
+  const navBgClass = theme === 'Dark' ? 'bg-gray-800' : 'bg-gray-100';
+  const textClass = theme === 'Dark' ? 'dark:text-white' : 'text-black';
   return (
     <header dir={i18n.dir()} id="header" className="absolute inset-x-0 top-0 z-50">
       <nav
         aria-label="Global"
-        className="flex items-center justify-between p-4 lg:px-8 bg-gray-100 shadow-md"
+        className={`flex items-center justify-between p-4 lg:px-8 ${navBgClass} shadow-md`}
       >
         {/* Logo */}
-        <div className="flex lg:flex-1 cursor-pointer"><span className="text-2xl font-bold text-indigo-600"> {t("E-Learning")} </span></div>
+  <div className="flex lg:flex-1 cursor-pointer"><span className={`text-2xl font-bold text-indigo-600 ${textClass}`}> {t("E-Learning")} </span></div>
 
         {/* Mobile Menu Button */}
         <div className="flex lg:hidden">
@@ -76,38 +87,45 @@ function Navbar() {
 
         <div dir={locale === 'ar' ? 'rtl' : 'ltr'} className="hidden lg:flex lg:gap-x-12">
           <div className="hidden lg:flex lg:gap-x-12 align-content-center">
-            <NavLink to="/" className="text-sm font-semibold text-black">
+            <NavLink to="/" className={`text-sm font-semibold ${textClass}`}>
               {t("Home")}
             </NavLink>
-            <NavLink to="/courses" className="text-sm font-semibold text-black">
+            <NavLink to="/courses" className={`text-sm font-semibold ${textClass}`}>
               {t("Courses")}
             </NavLink>
-            <NavLink to="/favourite" className="text-sm font-semibold text-black">
-              {t("Favorites")}{" "}
+            <NavLink to="/favourite" className={`text-sm font-semibold ${textClass}`}>
+              {t("Favorites") + " "}
               <span className="text-xs text-gray-500">({favorite.length})</span>
             </NavLink>
-            <NavLink to="/whishlist" className="text-sm font-semibold text-black">
+            <NavLink to="/whishlist" className={`text-sm font-semibold ${textClass}`}>
               {t("Wishlist")}
             </NavLink>
           </div>
         </div>
 
-        {/* Desktop Login/User */}
+        {/* Desktop Login/User + Theme Toggle */}
         <div className="hidden lg:flex lg:flex-1 lg:justify-end items-center gap-4">
+          
+<button
+  onClick={handleThemeToggle}
+  className={`text-sm font-semibold px-3 py-2 rounded-lg ${textClass}`}
+>
+  {theme === "Light" ? <FaMoon /> : <FaSun />}
+</button>
           {user ? (
             <>
-              <span dir={locale === 'ar' ? 'rtl' : 'ltr'} className="text-sm font-semibold text-black">
+              <span dir={locale === 'ar' ? 'rtl' : 'ltr'} className={`text-sm font-semibold ${textClass}`}>
                 {t("Hello")}, {user.name}
               </span>
               <span dir={locale === 'ar' ? 'rtl' : 'ltr'}
                 onClick={() => handleLanguageclick()}
-                className="cursor-pointer text-left rounded-lg px-3 py-2 text-base font-semibold text-black hover:bg-gray-200"
+                className={`cursor-pointer text-left rounded-lg px-3 py-2 text-base font-semibold ${textClass} hover:bg-gray-200`}
               >
                 {locale === 'en' ? 'Arabic' : 'الإنجليزية'}
               </span>
               <button
                 onClick={handleLogout}
-                className="text-sm font-semibold text-red-600 hover:text-red-800"
+                className={`text-sm font-semibold text-red-600 hover:text-red-800`}
               >
                 {t("Logout")}
               </button>
@@ -116,11 +134,11 @@ function Navbar() {
               <>
                 <span dir={locale === 'ar' ? 'rtl' : 'ltr'}
                   onClick={() => handleLanguageclick()}
-                  className="cursor-pointer text-left rounded-lg px-3 py-2 text-base font-semibold text-black hover:bg-gray-200"
+                  className={`cursor-pointer text-left rounded-lg px-3 py-2 text-base font-semibold ${textClass} hover:bg-gray-200`}
                 >
                   {locale === 'en' ? 'Arabic' : 'الإنجليزية'}
                 </span>
-                <NavLink to="/login" className="text-sm font-semibold text-black">
+                <NavLink to="/login" className={`text-sm font-semibold ${textClass}`}>
                   {t("Login")} <span aria-hidden="true">&rarr;</span>
                 </NavLink>
               </>
