@@ -88,7 +88,15 @@ function Login() {
             }));
             return;
         }
-
+        if (user.role === "admin") {
+            localStorage.setItem("admin", JSON.stringify(user));
+            window.dispatchEvent(new Event("userChange"));
+            setSuccessMsg(t("Logged in successfully! Redirecting..."));
+            setTimeout(() => {
+                navigate("/adminpanel");
+            }, 1500);
+            return;
+        }
         localStorage.setItem("currentUser", JSON.stringify(user));
         window.dispatchEvent(new Event("userChange"));
         setSuccessMsg(t("Logged in successfully! Redirecting..."));
@@ -176,7 +184,7 @@ function Login() {
                         <button
                             type="button"
                             onClick={handleTogglePassword}
-                            className={`absolute inset-y-0 ${direction==="rtl"?"left-3":"right-3"} flex items-center text-gray-500 hover:text-gray-700 pb-6`}
+                            className={`absolute inset-y-0 ${direction === "rtl" ? "left-3" : "right-3"} flex items-center text-gray-500 hover:text-gray-700 pb-6`}
                         >
                             {showPassword ? (
                                 <EyeSlashIcon className="h-5 w-5" />
