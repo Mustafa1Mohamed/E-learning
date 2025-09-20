@@ -7,8 +7,10 @@ import { HeartIcon as OutlineHeart } from "@heroicons/react/24/outline";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleFav } from "../Store/actions/FavAction";
 import { toggleWhishlist } from "../Store/actions/WhishListAction";
+import { enrollCourse } from "../Store/actions/EnrolledCoursesAction";
 
 function FeaturedCourses() {
+    const [localEnrollment, setLocalEnrollment] = useState({}); 
     const { t, i18n } = useTranslation();
     const direction = i18n.dir();
     const [courses, setCourses] = useState([]);
@@ -21,6 +23,9 @@ function FeaturedCourses() {
     const favorites = useSelector((state) => state.FavReducers.favorites);
     const whishlist = useSelector((state) => state.WhishlistReducer.whishlist);
     const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+
+    const enrolledCourses = useSelector((state) => state.EnrolledCoursesReducer.enrolled);
+    const isEnrolled = (courseId) => enrolledCourses.some((course) => course.id === courseId);
 
     useEffect(() => {
         axios
@@ -62,6 +67,18 @@ function FeaturedCourses() {
                 {courses.map((course) => {
                     const isFavorite = favorites.some((c) => c.id === course.id);
                     const isInWishlist = whishlist.some((c) => c.id === course.id);
+
+                    const coursePayload = {
+                        id: course.id,
+                        course_name: course.course_name,
+                        course_plan: course.course_plan,
+                        course_image: course.course_image,
+                        course_price: course.course_price,
+                        course_description: course.course_description,
+                    };
+
+                    const enrolled = localEnrollment[course.id] ?? isEnrolled(course.id); 
+
                     return (
                         <div
                             key={course.id}
@@ -76,7 +93,6 @@ function FeaturedCourses() {
                                 />
                                 {/* Icons */}
                                 <div className="absolute top-2 right-2 flex gap-2">
-                                    {/* Favorite */}
                                     <button
                                         onClick={() => handleToggleFavorite(course)}
                                         className="p-2 bg-white/80 rounded-full shadow hover:bg-white"
@@ -87,7 +103,6 @@ function FeaturedCourses() {
                                             <OutlineHeart className="h-6 w-6 text-gray-600" />
                                         )}
                                     </button>
-                                    {/* Wishlist */}
                                     <button
                                         onClick={() => handleToggleWishlist(course)}
                                         className="p-2 bg-white/80 rounded-full shadow hover:bg-white"
@@ -133,6 +148,23 @@ function FeaturedCourses() {
                                     >
                                         {t("View Details")}
                                     </button>
+
+                                    <button
+                                        onClick={() => {
+                                            if (!currentUser) return navigate("/login");
+                                            if (!enrolled) {
+                                                dispatch(enrollCourse(coursePayload));
+                                                setLocalEnrollment(prev => ({ ...prev, [course.id]: true }));
+                                            } else {
+                                                setLocalEnrollment(prev => ({ ...prev, [course.id]: false }));
+                                            }
+                                        }}
+                                        disabled={enrolled}
+                                        className={`px-4 py-2 rounded-md text-white transition ${
+                                            enrolled ? "bg-gray-400 cursor-not-allowed" : "bg-green-600 hover:bg-green-500"
+                                        }`}
+                                    >
+                                        {enrolled ? "Enrolled" : "Enroll Course"}
                                     <button className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-500 transition">
                                         {t("Enroll Course")}
                                     </button>
@@ -147,4 +179,3 @@ function FeaturedCourses() {
 }
 
 export default FeaturedCourses;
-
