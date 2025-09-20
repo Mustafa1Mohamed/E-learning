@@ -132,10 +132,10 @@ function FeaturedCourses() {
                                 <div>
                                     <div className="flex items-center justify-between mb-2">
                                         <h3 className={`text-xl font-bold ${theme === 'Dark' ? 'dark:text-white' : 'text-gray-900'}`}>
-                                            {t("Course Name")}: {t(course.course_name)}
+                                            {t(course.course_name)}
                                         </h3>
                                         <p className="text-indigo-600 font-semibold text-lg">
-                                            {t("Price")}: ${course.course_price}
+                                            ${course.course_price}
                                         </p>
                                     </div>
                                     <p className={`text-sm ${theme === 'Dark' ? 'dark:text-gray-300' : 'text-gray-500'}`}>{t(course.course_plan)}</p>

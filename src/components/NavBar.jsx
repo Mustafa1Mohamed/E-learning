@@ -119,7 +119,7 @@ function Navbar() {
           </button>
           {user ? (
             <>
-              <span dir={locale === 'ar' ? 'rtl' : 'ltr'} className={`text-sm font-semibold ${textClass}`}
+              <span dir={locale === 'ar' ? 'rtl' : 'ltr'} className={`text-sm font-semibold ${textClass} cursor-pointer`}
                 onClick={() => navigate("/Profile")}>
                 {t("Hello")}, {user.name}
               </span>
