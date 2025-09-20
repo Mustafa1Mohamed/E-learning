@@ -73,7 +73,7 @@ export default function AdminPanel() {
  const handleChange = (e) => {
   const { name, value, type, files } = e.target;
   if (type === "file") {
-    setCourseData({ ...courseData, [name]: files[0] });
+    setCourseData({ ...courseData, [name]: URL.createObjectURL(files[0]) });
   } else {
     setCourseData({ ...courseData, [name]: value });
   }
@@ -88,7 +88,7 @@ export default function AdminPanel() {
 
   // Add course
   const handleAdd = async () => {
-    if (!courseData.course_name || !courseData.course_price) {
+    if (!courseData.course_name || !courseData.course_price || !courseData.course_plan || !courseData.course_image || !courseData.course_description) {
       setError(t("Please fill in all fields"));
       return;
     }
@@ -96,11 +96,11 @@ export default function AdminPanel() {
     try {
       await axios.post(API_URL, courseData);
       setCourseData({ course_name: "", course_plan: "", course_price: "", course_image: "" ,course_description: ""});
-      setMessage(t("Course added successfully"));
+      setMessage("Course added successfully");
 
       fetchCourses(currentPage, searchTerm);
     } catch (err) {
-      setError(t("Error adding course"));
+      setError("Error adding course");
     }
   };
 
@@ -115,26 +115,26 @@ export default function AdminPanel() {
       await axios.put(`${API_URL}/${editingCourse}`, courseData);
       setEditingCourse(null);
       setCourseData({ course_name: "", course_plan: "", course_price: "", course_image: "", course_description: "" });
-      setMessage(t("Course updated successfully"));
+      setMessage("Course updated successfully");
       fetchCourses(currentPage, searchTerm);
     } catch (err) {
-      setError(t("Error updating course"));
+      setError("Error updating course");
     }
   };
 
   // Delete course (show confirm message instead of window.confirm)
   const handleDeleteRequest = (id) => {
     setPendingDeleteId(id);
-    setConfirmMessage(t("Are you sure you want to delete this course?"));
+    setConfirmMessage("Are you sure you want to delete this course?");
   };
 
   const confirmDelete = async () => {
     try {
       await axios.delete(`${API_URL}/${pendingDeleteId}`);
-      setMessage(t("Course deleted successfully"));
+      setMessage("Course deleted successfully");
       fetchCourses(currentPage, searchTerm);
     } catch (err) {
-      setError(t("Error deleting course"));
+      setError("Error deleting course");
     } finally {
       setPendingDeleteId(null);
       setConfirmMessage(null);
@@ -321,7 +321,7 @@ export default function AdminPanel() {
                           {t("Delete")}
                         </button>
                       </td>
-                      <td className="p-2 border">{course.course_description}</td> {/* <-- Add this line */}
+                      <td className="p-2 border">{t(course.course_description)}</td> {/* <-- Add this line */}
                     </tr>
                   ))}
                 </tbody>

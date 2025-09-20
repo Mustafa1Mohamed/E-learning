@@ -215,5 +215,13 @@
     "Custom integrations": "تكاملات مخصصة",
     "$29": "29$",
     "$99": "99$",
-    "/month": "/شهريًا"
+    "/month": "/شهريًا",
+    "Please fill in all fields": "يرجى تعبئة جميع الحقول",
+    "Please enter a valid email address": "يرجى إدخال عنوان بريد إلكتروني صالح",
+    "Please enter a password with at least 6 characters": "يرجى إدخال كلمة مرور مكونة من 6 أحرف على الأقل",
+    "Course added successfully": "تمت اضافة الدورة بنجاح",
+    "Course deleted successfully": "تم حذف الدورة بنجاح",
+    "Yes": "نعم",
+    "No":"لا",
+    "Course updated successfully": "تم تحديث الدورة بنجاح"
 }
