@@ -32,16 +32,16 @@ export default function Pricing() {
 
             {/* Title & Subtitle */}
             <div className="mx-auto max-w-4xl text-center ">
-                <h2 className="text-base sm:text-lg font-semibold text-indigo-400">
-                    {t("pricing_title")}
-                </h2>
-                <p className="mt-2 text-3xl sm:text-4xl font-semibold">
-                    {t("pricing_subtitle")}
-                </p>
+                    <h2 className="text-base sm:text-lg font-semibold text-indigo-400">
+                        {t("Pricing Plans")}
+                    </h2>
+                    <p className="mt-2 text-3xl sm:text-4xl font-semibold">
+                        {t("Choose the right plan for you")}
+                    </p>
             </div>
 
             <p className="mx-auto mt-6 max-w-2xl text-center text-sm sm:text-base font-medium">
-                {t("pricing_description")}
+                    {t("Choose an affordable plan packed with the best features for engaging your audience, creating customer loyalty, and driving sales.")}
             </p>
 
             {/* plans */}
@@ -52,28 +52,28 @@ export default function Pricing() {
                         id="tier-hobby"
                         className="text-base font-semibold text-indigo-400"
                     >
-                        {t("hobby_title")}
+                            {t("Hobby")}
                     </h3>
                     <p className="mt-4 flex items-baseline gap-x-2">
                         <span className="text-5xl font-semibold tracking-tight">
-                            {t("hobby_price")}
+                            $29
                         </span>
-                        <span className="text-base">{t("hobby_per_month")}</span>
+                        <span className="text-base">/month</span>
                     </p>
                     <p className="mt-6 text-base">
-                        {t("hobby_description")}
+                            {t("The perfect plan if you're just getting started with our product.")}
                     </p>
                     <ul className="mt-8 space-y-3 text-sm sm:mt-10">
-                        <li className="flex gap-x-3">✔ {t("hobby_feature_1")}</li>
-                        <li className="flex gap-x-3">✔ {t("hobby_feature_2")}</li>
-                        <li className="flex gap-x-3">✔ {t("hobby_feature_3")}</li>
-                        <li className="flex gap-x-3">✔ {t("hobby_feature_4")}</li>
+                            <li className="flex gap-x-3">✔ {t("25 products")}</li>
+                            <li className="flex gap-x-3">✔ {t("Up to 10,000 subscribers")}</li>
+                            <li className="flex gap-x-3">✔ {t("Advanced analytics")}</li>
+                            <li className="flex gap-x-3">✔ {t("24-hour support response time")}</li>
                     </ul>
                     <a
                         href="#"
                         className="mt-8 block rounded-md bg-indigo-500 px-3.5 py-2.5 text-center text-sm font-semibold text-white hover:bg-indigo-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 sm:mt-10"
                     >
-                        {t("hobby_cta")}
+                            {t("Get started today")}
                     </a>
                 </div>
 
@@ -83,30 +83,30 @@ export default function Pricing() {
                         id="tier-enterprise"
                         className="text-base font-semibold text-indigo-400"
                     >
-                        {t("enterprise_title")}
+                            {t("Enterprise")}
                     </h3>
                     <p className="mt-4 flex items-baseline gap-x-2">
                         <span className="text-5xl font-semibold tracking-tight">
-                            {t("enterprise_price")}
+                            $99
                         </span>
-                        <span className="text-base">{t("enterprise_per_month")}</span>
+                        <span className="text-base">/month</span>
                     </p>
                     <p className="mt-6 text-base">
-                        {t("enterprise_description")}
+                            {t("Dedicated support and infrastructure for your company.")}
                     </p>
                     <ul className="mt-8 space-y-3 text-sm sm:mt-10">
-                        <li className="flex gap-x-3">✔ {t("enterprise_feature_1")}</li>
-                        <li className="flex gap-x-3">✔ {t("enterprise_feature_2")}</li>
-                        <li className="flex gap-x-3">✔ {t("enterprise_feature_3")}</li>
-                        <li className="flex gap-x-3">✔ {t("enterprise_feature_4")}</li>
-                        <li className="flex gap-x-3">✔ {t("enterprise_feature_5")}</li>
-                        <li className="flex gap-x-3">✔ {t("enterprise_feature_6")}</li>
+                            <li className="flex gap-x-3">✔ {t("Unlimited products")}</li>
+                            <li className="flex gap-x-3">✔ {t("Unlimited subscribers")}</li>
+                            <li className="flex gap-x-3">✔ {t("Advanced analytics")}</li>
+                            <li className="flex gap-x-3">✔ {t("Dedicated support representative")}</li>
+                            <li className="flex gap-x-3">✔ {t("Marketing automations")}</li>
+                            <li className="flex gap-x-3">✔ {t("Custom integrations")}</li>
                     </ul>
                     <a
                         href="#"
                         className="mt-8 block rounded-md bg-indigo-500 px-3.5 py-2.5 text-center text-sm font-semibold text-white hover:bg-indigo-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 sm:mt-10"
                     >
-                        {t("enterprise_cta")}
+                            {t("Get started today")}
                     </a>
                 </div>
             </div>
