@@ -5,27 +5,33 @@ import { HeartIcon as SolidHeart } from "@heroicons/react/24/solid";
 import { HeartIcon as OutlineHeart } from "@heroicons/react/24/outline";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleFav } from "../../Store/actions/FavAction";
-import { toggleWhishlist } from "../../Store/actions/WhishListAction"; 
+import { toggleWhishlist } from "../../Store/actions/WhishListAction";
 import { useTranslation } from "react-i18next";
+import { enrollCourse } from "../../Store/actions/EnrolledCoursesAction";
 
 function CourseDetails() {
+  const { id } = useParams();
+  const enrolledCourses = useSelector((state) => state.EnrolledCoursesReducer.enrolled);
+  const isEnrolled = enrolledCourses.some((course) => course.id === parseInt(id));
   const { t, i18n } = useTranslation();
   const direction = i18n.dir();
-  const { id } = useParams();
   const [course, setCourse] = useState(null);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const favorites = useSelector((state) => state.FavReducers.favorites);
-  const whishlist = useSelector((state) => state.WhishlistReducer.whishlist); 
+  const whishlist = useSelector((state) => state.WhishlistReducer.whishlist);
   const theme = useSelector((state) => state.combineTheme.theme);
-
+  const handleEnroll = () => {
+    if (!currentUser) return navigate("/login");
+    if (!isEnrolled) dispatch(enrollCourse(course));
+  };
   const themeBg = theme === "Dark" ? "bg-gray-800" : "bg-gray-50";
   const themeText = theme === "Dark" ? "dark:text-white" : "";
 
   const currentUser = JSON.parse(localStorage.getItem("currentUser"));
   const isFavorite = favorites.some((c) => c.id === parseInt(id));
-  const isInWishlist = whishlist.some((c) => c.id === parseInt(id)); 
+  const isInWishlist = whishlist.some((c) => c.id === parseInt(id));
 
   const handleToggleFavorite = () => {
     if (!currentUser) {
@@ -66,11 +72,10 @@ function CourseDetails() {
       className={`${theme === 'Dark' ? 'bg-gray-800 text-white' : 'bg-white text-gray-900'} min-h-screen h-[100vh] flex items-center justify-center px-6 w-1/2 mx-auto`}
     >
       <div
-        className={`shadow-lg rounded-lg overflow-hidden flex flex-col md:flex-row border ${
-          theme === "Dark"
+        className={`shadow-lg rounded-lg overflow-hidden flex flex-col md:flex-row border ${theme === "Dark"
             ? "bg-gray-800 text-white border-gray-500"
             : "bg-white text-gray-900 border-gray-300"
-        }`}
+          }`}
       >
         {/* img */}
         <div className="md:w-1/3 relative">
@@ -127,24 +132,21 @@ function CourseDetails() {
         <div className="md:w-2/3 p-8 flex flex-col justify-between">
           <div>
             <h1
-              className={`text-2xl font-bold mb-2 ${
-                theme === "Dark" ? "text-white" : "text-gray-900"
-              }`}
+              className={`text-2xl font-bold mb-2 ${theme === "Dark" ? "text-white" : "text-gray-900"
+                }`}
             >
               {t(course.course_name)}
             </h1>
 
             <p
-              className={`text-sm mb-2 ${
-                theme === "Dark" ? "text-gray-300" : "text-gray-500"
-              }`}
+              className={`text-sm mb-2 ${theme === "Dark" ? "text-gray-300" : "text-gray-500"
+                }`}
             >
               {t(course.course_plan)}
             </p>
             <p
-              className={`mb-4 ${
-                theme === "Dark" ? "text-gray-200" : "text-gray-700"
-              }`}
+              className={`mb-4 ${theme === "Dark" ? "text-gray-200" : "text-gray-700"
+                }`}
             >
               {t(course.course_description)}
             </p>
@@ -156,8 +158,8 @@ function CourseDetails() {
           {/* btns*/}
           <div className="mt-6 flex gap-3">
             {currentUser ? (
-              <button className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-500">
-                {t("Enroll Course")}
+              <button className={`px-4 py-2 rounded-md ${isEnrolled ? "bg-gray-400 cursor-not-allowed" : "bg-indigo-500"}`} onClick={handleEnroll}>
+                {isEnrolled ? t("Enrolled") : t("Enroll Course")}
               </button>
             ) : (
               <button
