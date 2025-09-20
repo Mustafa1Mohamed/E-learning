@@ -58,7 +58,7 @@ export default function Pricing() {
                         <span className="text-5xl font-semibold tracking-tight">
                             $29
                         </span>
-                        <span className="text-base">/month</span>
+                        <span className="text-base">{t("/month")}</span>
                     </p>
                     <p className="mt-6 text-base">
                             {t("The perfect plan if you're just getting started with our product.")}
@@ -89,7 +89,7 @@ export default function Pricing() {
                         <span className="text-5xl font-semibold tracking-tight">
                             $99
                         </span>
-                        <span className="text-base">/month</span>
+                        <span className="text-base">{t("/month")}</span>
                     </p>
                     <p className="mt-6 text-base">
                             {t("Dedicated support and infrastructure for your company.")}

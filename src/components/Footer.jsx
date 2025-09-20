@@ -13,7 +13,7 @@ export default function Footer() {
 
   // Get theme from Redux
   const theme = useSelector((state) => state.combineTheme.theme);
-  const themeBg = theme === "Dark" ? "bg-gray-800" : "bg-gray-100";
+  const themeBg = theme === "Dark" ? "bg-gray-900" : "bg-gray-100";
   const themeText = theme === "Dark" ? "text-gray-300" : "text-gray-500";
   const headingText = theme === "Dark" ? "text-white" : "text-gray-900";
 
