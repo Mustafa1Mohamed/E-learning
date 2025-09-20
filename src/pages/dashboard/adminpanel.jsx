@@ -4,8 +4,10 @@ import { useTranslation } from "react-i18next";
 
 // import { Description } from "@headlessui/react";
 import GlobalMessage from "../../components/GlobalMessage";
+import { useNavigate } from "react-router-dom";
 
 export default function AdminPanel() {
+  const navigate = useNavigate();
   const admin=JSON.parse(localStorage.getItem("admin"));
   const { t, i18n } = useTranslation();
   const direction = i18n.dir();
@@ -125,7 +127,7 @@ export default function AdminPanel() {
   // Delete course (show confirm message instead of window.confirm)
   const handleDeleteRequest = (id) => {
     setPendingDeleteId(id);
-    setConfirmMessage("Are you sure you want to delete this course?");
+    setConfirmMessage(t("Are you sure you want to delete this course?"));
   };
 
   const confirmDelete = async () => {
@@ -309,13 +311,19 @@ export default function AdminPanel() {
                       </td>
                       <td className="p-2 border space-x-2 flex justify-center gap-2 align-middle pb-5 pt-7">
                         <button
-                          onClick={() => handleEdit(course)}
+                          onClick={() => {
+                            window.scrollTo(0, 0);
+                            handleEdit(course)
+                          }}
                           className="bg-yellow-500 text-white px-2 py-1 rounded hover:bg-yellow-600"
                         >
                           {t("Edit")}
                         </button>
                         <button
-                          onClick={() => handleDeleteRequest(course.id)}
+                          onClick={() => {
+                            window.scrollTo(0, 0);
+                            handleDeleteRequest(course.id)
+                          }}
                           className="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600"
                         >
                           {t("Delete")}
