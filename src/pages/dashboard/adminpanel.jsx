@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useTranslation } from "react-i18next";
+// import { Description } from "@headlessui/react";
 
 export default function AdminPanel() {
   const { t, i18n } = useTranslation();
@@ -23,7 +24,8 @@ export default function AdminPanel() {
     course_name: "",
     course_plan: "",
     course_price: "",
-    course_image: ""
+    course_image: "",
+    course_description: "",
   });
 
   // Fetch courses with pagination & search
@@ -35,6 +37,7 @@ export default function AdminPanel() {
         : `${API_URL}?_page=${page}&_limit=${coursesPerPage}`;
 
       const res = await axios.get(url);
+      console.log(res.data); // Debugging line to inspect fetched data
       setCourses(res.data);
 
       // Total count header only appears without "like"
@@ -57,9 +60,15 @@ export default function AdminPanel() {
   }, [currentPage, searchTerm]);
 
   // Handle input changes
-  const handleChange = (e) => {
-    setCourseData({ ...courseData, [e.target.name]: e.target.value });
-  };
+ const handleChange = (e) => {
+  const { name, value, type, files } = e.target;
+  if (type === "file") {
+    setCourseData({ ...courseData, [name]: files[0] });
+  } else {
+    setCourseData({ ...courseData, [name]: value });
+  }
+};
+
 
   // Add course
   const handleAdd = async () => {
@@ -69,7 +78,7 @@ export default function AdminPanel() {
     }
     try {
       await axios.post(API_URL, courseData);
-      setCourseData({ course_name: "", course_plan: "", course_price: "", course_image: "" });
+      setCourseData({ course_name: "", course_plan: "", course_price: "", course_image: "" ,course_description: ""});
       fetchCourses(currentPage, searchTerm);
     } catch (err) {
       alert(t("Error adding course"));
@@ -86,7 +95,7 @@ export default function AdminPanel() {
     try {
       await axios.put(`${API_URL}/${editingCourse}`, courseData);
       setEditingCourse(null);
-      setCourseData({ course_name: "", course_plan: "", course_price: "", course_image: "" });
+      setCourseData({ course_name: "", course_plan: "", course_price: "", course_image: "", course_description: "" });
       fetchCourses(currentPage, searchTerm);
     } catch (err) {
       alert(t("Error updating course"));
@@ -135,6 +144,14 @@ export default function AdminPanel() {
             />
             <input
               type="text"
+              name="course_description"
+              value={courseData.course_description}
+              onChange={handleChange}
+              placeholder={t("Description")}
+              className="border p-2 rounded-lg w-full"
+            />
+            <input
+              type="text"
               name="course_plan"
               value={courseData.course_plan}
               onChange={handleChange}
@@ -144,17 +161,15 @@ export default function AdminPanel() {
             <input
               type="number"
               name="course_price"
-              value={courseData.course_price}
+               value={courseData.course_price}
               onChange={handleChange}
               placeholder={t("Course Price")}
               className="border p-2 rounded-lg w-full"
             />
             <input
-              type="text"
+              type="file"
               name="course_image"
-              value={courseData.course_image}
               onChange={handleChange}
-              placeholder={t("Image URL")}
               className="border p-2 rounded-lg w-full"
             />
           </div>
@@ -205,6 +220,7 @@ export default function AdminPanel() {
                     <th className="p-2 border">{t("Price")}</th>
                     <th className="p-2 border">{t("Image")}</th>
                     <th className="p-2 border">{t("Actions")}</th>
+                    <th className="p-2 border">{t("Description")}</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -239,6 +255,7 @@ export default function AdminPanel() {
                           {t("Delete")}
                         </button>
                       </td>
+                      <td className="p-2 border">{course.course_description}</td> {/* <-- Add this line */}
                     </tr>
                   ))}
                 </tbody>
