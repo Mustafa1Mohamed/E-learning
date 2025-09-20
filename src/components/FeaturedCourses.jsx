@@ -164,9 +164,7 @@ function FeaturedCourses() {
                                             enrolled ? "bg-gray-400 cursor-not-allowed" : "bg-green-600 hover:bg-green-500"
                                         }`}
                                     >
-                                        {enrolled ? "Enrolled" : "Enroll Course"}
-                                    <button className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-500 transition">
-                                        {t("Enroll Course")}
+                                        {enrolled ? t("Enrolled") : t("Enroll Course")}
                                     </button>
                                 </div>
                             </div>
