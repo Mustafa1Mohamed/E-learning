@@ -72,7 +72,7 @@ function Courses() {
               setSearchTerm(e.target.value);
               // setCurrentPage(1); // reset to first page when searching
             }}
-            className="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            className={`w-full px-4 py-3 border border-gray-300 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-indigo-500 ${themeBg} ${themeText}`}
           />
         </div>
 
