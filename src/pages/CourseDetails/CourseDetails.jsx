@@ -73,8 +73,8 @@ function CourseDetails() {
     >
       <div
         className={`shadow-lg rounded-lg overflow-hidden flex flex-col md:flex-row border ${theme === "Dark"
-            ? "bg-gray-800 text-white border-gray-500"
-            : "bg-white text-gray-900 border-gray-300"
+          ? "bg-gray-800 text-white border-gray-500"
+          : "bg-white text-gray-900 border-gray-300"
           }`}
       >
         {/* img */}
@@ -105,7 +105,8 @@ function CourseDetails() {
             {/* Wishlist*/}
             <button
               onClick={handleToggleWishlist}
-              className="p-2 bg-white/80 rounded-full shadow hover:bg-white"
+              className={`p-2${isEnrolled ? " opacity-50 cursor-not-allowed" : ""} bg-white/80 rounded-full shadow hover:bg-white`}
+              disabled={isEnrolled}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -158,7 +159,10 @@ function CourseDetails() {
           {/* btns*/}
           <div className="mt-6 flex gap-3">
             {currentUser ? (
-              <button className={`px-4 py-2 rounded-md ${isEnrolled ? "bg-gray-400 cursor-not-allowed" : "bg-indigo-500"}`} onClick={handleEnroll}>
+              <button className={`px-4 py-2 rounded-md ${isEnrolled ? "bg-gray-400 cursor-not-allowed " : "bg-green-600 "} text-white`} onClick={() => {
+                handleEnroll();
+                if (isInWishlist) handleToggleWishlist();
+              }}>
                 {isEnrolled ? t("Enrolled") : t("Enroll Course")}
               </button>
             ) : (

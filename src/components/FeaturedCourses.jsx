@@ -105,7 +105,8 @@ function FeaturedCourses() {
                                     </button>
                                     <button
                                         onClick={() => handleToggleWishlist(course)}
-                                        className="p-2 bg-white/80 rounded-full shadow hover:bg-white"
+                                        className={`p-2 ${enrolled ? "bg-gray-400 cursor-not-allowed rounded-full hover:bg-gray-300" : "bg-white/80 rounded-full shadow hover:bg-white"}`}
+                                        disabled={enrolled}
                                     >
                                         <svg
                                             xmlns="http://www.w3.org/2000/svg"
@@ -154,6 +155,9 @@ function FeaturedCourses() {
                                             if (!currentUser) return navigate("/login");
                                             if (!enrolled) {
                                                 dispatch(enrollCourse(coursePayload));
+                                                if(isInWishlist) {
+                                                    dispatch(toggleWhishlist(coursePayload));
+                                                }
                                                 setLocalEnrollment(prev => ({ ...prev, [course.id]: true }));
                                             } else {
                                                 setLocalEnrollment(prev => ({ ...prev, [course.id]: false }));

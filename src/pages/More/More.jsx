@@ -1,13 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 const More = () => {
+  const { t, i18n } = useTranslation();
+  const direction = i18n.dir();
   const { id } = useParams();
   const navigate = useNavigate(); 
   const [course, setCourse] = useState(null);
   const [lessons, setLessons] = useState([]);
-
+  const theme = useSelector(state => state.combineTheme.theme);
+  const themeBg = theme === 'Dark' ? 'bg-gray-800' : 'bg-gray-50';
+  const themeText = theme === 'Dark' ? 'dark:text-white' : '';
   useEffect(() => {
     axios
       .get(`https://retoolapi.dev/dL2nNn/data/${id}`)
@@ -16,7 +22,7 @@ const More = () => {
 
     const generatedLessons = Array.from({ length: 10 }, (_, i) => ({
       id: i + 1,
-      title: `Lesson ${i + 1}`,
+      title: t("Lesson ")+(i + 1),
       duration: `${10 + i * 2} min`,
       isCompleted: false,
     }));
@@ -41,9 +47,9 @@ const More = () => {
   }
 
   return (
-    <div className="container mx-auto p-24 min-h-screen bg-gray-50">
+    <div dir={direction} className={"container mx-auto p-24 min-h-screen "+ themeBg + " " + themeText}>
       {/* Course details */}
-      <div className="bg-white shadow-lg rounded-lg p-6 mb-8 flex flex-col md:flex-row gap-6">
+      <div  className={" shadow-lg rounded-lg p-6 mb-8 flex flex-row justify-between gap-1"+ themeBg}>
         <div className="md:w-1/3">
           <img
             src={course.course_image}
@@ -52,20 +58,20 @@ const More = () => {
           />
         </div>
 
-        <div className="md:w-2/3 flex flex-col justify-center">
-          <h2 className="text-2xl font-bold text-gray-800 mb-3">{course.course_name}</h2>
-          <p className="text-gray-600 mb-2">{course.course_plan}</p>
-          <p className="text-gray-700">{course.course_description}</p>
+        <div className="md:w-2/3 flex flex-col justify-center p-2 ">
+          <h2 className={`text-2xl font-bold ${theme==='Dark' ? 'text-white' : 'text-gray-800'} mb-3`}>{t(course.course_name)}</h2>
+          <p className={`${theme==='Dark' ? 'text-gray-400' : 'text-gray-600'} mb-2`}>{t(course.course_plan)}</p>
+          <p className={`${theme==='Dark' ? 'text-gray-400' : 'text-gray-700'}`}>{t(course.course_description)}</p>
         </div>
       </div>
 
       {/* Lessons */}
-      <h2 className="text-xl font-bold text-gray-800 mb-4">Lessons</h2>
+      <h2 className="text-xl font-bold text-gray-800 mb-4">{t("Lessons")}</h2>
       <div className="space-y-4 mb-8">
         {lessons.map((lesson) => (
           <div
             key={lesson.id}
-            className="flex items-center justify-between p-4 bg-white shadow-md rounded-lg hover:shadow-lg transition"
+            className={`flex items-center justify-between p-4 ${theme==='Dark' ? 'bg-gray-900' : 'bg-white'} shadow-md rounded-lg hover:shadow-lg transition`}
           >
             <div className="flex items-center gap-4">
               <div
@@ -76,7 +82,7 @@ const More = () => {
                 {lesson.id}
               </div>
               <div>
-                <h2 className="text-lg font-medium text-gray-800">{lesson.title}</h2>
+                <h2 className={`text-lg font-medium ${theme==='Dark' ? 'text-white' : 'text-gray-800'}`}>{lesson.title}</h2>
                 <p className="text-sm text-gray-500">{lesson.duration}</p>
               </div>
             </div>
@@ -90,7 +96,7 @@ const More = () => {
               }`}
               disabled={lesson.isCompleted}
             >
-              {lesson.isCompleted ? "Completed" : "Start"}
+              {lesson.isCompleted ? t("Completed") : t("Start")}
             </button>
           </div>
         ))}
@@ -101,7 +107,7 @@ const More = () => {
           onClick={() => navigate("/MyCourses")}
           className="px-6 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-500 transition"
         >
-          Back to My Courses
+          {t("Back to My Courses")}
         </button>
       </div>
     </div>

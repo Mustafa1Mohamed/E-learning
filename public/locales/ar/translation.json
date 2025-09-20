@@ -223,5 +223,21 @@
     "Course deleted successfully": "تم حذف الدورة بنجاح",
     "Yes": "نعم",
     "No":"لا",
-    "Course updated successfully": "تم تحديث الدورة بنجاح"
+    "Course updated successfully": "تم تحديث الدورة بنجاح",
+    "My Courses": "الدورات الخاصة بي",
+    "No courses enrolled yet": "لم يتم العثور على دورات مشتركة.",
+    "Start enrolling to see your courses here!": "ابداء العثور على الدورات الخاصة بك هنا!",
+    "Enroll Now": "ابداء العثور",
+    "Enrolled Courses": "الدورات المشتركة",
+    "Unenroll":"الغاء الاشتراك",
+    "Your Profile":"الملف الشخصي",
+    "Confirm":"تاكيد",
+    "Are you sure you want to unenroll from this course?":"هل تريد الغاء الاشتراك من هذه الدورة؟",
+    "Enrolled":"مشترك",
+    "Lessons":"الدروس",
+    "Start":"ابداء",
+    "Finish":"انهاء",
+    "Completed":"مكتمل",
+    "Lesson ":"الدرس",
+    "Back to My Courses":"العودة للدورات الخاصة بي"
 }

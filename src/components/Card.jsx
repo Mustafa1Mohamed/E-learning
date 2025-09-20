@@ -124,7 +124,8 @@ export default function Card({
                     {!isFavoritesPage && (
                         <button
                             onClick={handleToggleWishlist}
-                            className="p-2 bg-white/80 rounded-full shadow hover:bg-white"
+                            className={`p-2 ${isEnrolled ? "bg-gray-400 cursor-not-allowed rounded-full hover:bg-gray-300" : "bg-white/80 rounded-full shadow hover:bg-white"}`}
+                            disabled={isEnrolled}
                         >
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -189,7 +190,10 @@ export default function Card({
 
                     {renderActionButton(
                      isEnrolled ? t("Enrolled") : t("Enroll Course"),
-                    handleEnroll, isEnrolled ? "bg-gray-400 cursor-not-allowed" : "bg-green-600",
+                        () => {
+                            handleEnroll();
+                            if(isInWishlist) handleToggleWishlist();
+                    }, isEnrolled ? "bg-gray-400 cursor-not-allowed" : "bg-green-600",
                   )}
                 </div>
             </div>
