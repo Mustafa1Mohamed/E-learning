@@ -18,6 +18,7 @@ function Navbar() {
   };
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [user, setUser] = useState(null);
+  const [admin,serAdmin]=useState(null)
   const navigate = useNavigate();
 
   const handleLanguageclick = () => {
@@ -33,17 +34,22 @@ function Navbar() {
   useEffect(() => {
     const handleStorageChange = () => {
       setUser(JSON.parse(localStorage.getItem("currentUser")));
+      serAdmin(JSON.parse(localStorage.getItem("admin")));
     };
     const storedUser = JSON.parse(localStorage.getItem("currentUser"));
+    const storedAdmin = JSON.parse(localStorage.getItem("admin"));
     setUser(storedUser);
+    serAdmin(storedAdmin);
     window.addEventListener("userChange", handleStorageChange);
     return () => window.removeEventListener("userChange", handleStorageChange);
   }, []);
 
   const handleLogout = () => {
     localStorage.removeItem("currentUser");
+    localStorage.removeItem("admin");
     window.dispatchEvent(new Event("userChange"));
     setUser(null);
+    serAdmin(null);
     navigate("/login");
   };
   // Determine theme classes
@@ -116,6 +122,24 @@ function Navbar() {
               <span dir={locale === 'ar' ? 'rtl' : 'ltr'} className={`text-sm font-semibold ${textClass}`}
                 onClick={() => navigate("/Profile")}>
                 {t("Hello")}, {user.name}
+              </span>
+              <span dir={locale === 'ar' ? 'rtl' : 'ltr'}
+                onClick={() => handleLanguageclick()}
+                className={`cursor-pointer text-left rounded-lg px-3 py-2 text-base font-semibold ${textClass}`}
+              >
+                {locale === 'en' ? 'Arabic' : 'الإنجليزية'}
+              </span>
+              <button
+                onClick={handleLogout}
+                className={`text-sm font-semibold text-red-600 hover:text-red-800`}
+              >
+                {t("Logout")}
+              </button>
+            </>
+          ) : admin ? (
+            <>
+              <span dir={locale === 'ar' ? 'rtl' : 'ltr'} className={`text-sm font-semibold ${textClass}`}>
+                {t("Hello")}, {admin.name}
               </span>
               <span dir={locale === 'ar' ? 'rtl' : 'ltr'}
                 onClick={() => handleLanguageclick()}
