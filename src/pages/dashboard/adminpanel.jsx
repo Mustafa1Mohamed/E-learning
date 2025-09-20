@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import GlobalMessage from "../../components/GlobalMessage";
 
 export default function AdminPanel() {
+  const admin=JSON.parse(localStorage.getItem("admin"));
   const { t, i18n } = useTranslation();
   const direction = i18n.dir();
   const API_URL = "https://retoolapi.dev/dL2nNn/data";
@@ -58,6 +59,9 @@ export default function AdminPanel() {
   };
 
   useEffect(() => {
+    if(!admin){
+      window.location.href="/login";
+    }
     fetchCourses(currentPage, searchTerm);
   }, [currentPage, searchTerm]);
 
