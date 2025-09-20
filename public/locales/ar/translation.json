@@ -195,5 +195,33 @@
     "Previous":"السابق",
     "Close":"اغلاق",
     "All Courses":"جميع الدورات",
-    "Search by Course Name":"ابحث باسم الدورة"
+    "Search by Course Name":"ابحث باسم الدورة",
+
+     "Featured Courses": "الدورات المميزة",
+
+     "pricing_title": "خطط الأسعار",
+  "pricing_subtitle": "اختر الخطة المناسبة لك",
+  "pricing_description": "اختر خطة ميسورة التكلفة مليئة بأفضل الميزات لجذب جمهورك، وإنشاء ولاء العملاء، وزيادة المبيعات.",
+
+  "hobby_title": "الهواية",
+  "hobby_price": "29$",
+  "hobby_per_month": "/شهرياً",
+  "hobby_description": "الخطة المثالية إذا كنت بدأت للتو مع منتجنا.",
+  "hobby_feature_1": "25 منتج",
+  "hobby_feature_2": "حتى 10,000 مشترك",
+  "hobby_feature_3": "تحليلات متقدمة",
+  "hobby_feature_4": "دعم خلال 24 ساعة",
+  "hobby_cta": "ابدأ اليوم",
+
+  "enterprise_title": "المؤسسات",
+  "enterprise_price": "99$",
+  "enterprise_per_month": "/شهرياً",
+  "enterprise_description": "دعم وبنية تحتية مخصصة لشركتك.",
+  "enterprise_feature_1": "منتجات غير محدودة",
+  "enterprise_feature_2": "مشتركين غير محدودين",
+  "enterprise_feature_3": "تحليلات متقدمة",
+  "enterprise_feature_4": "ممثل دعم مخصص",
+  "enterprise_feature_5": "أتمتة التسويق",
+  "enterprise_feature_6": "تكاملات مخصصة",
+  "enterprise_cta": "ابدأ اليوم"
 }
