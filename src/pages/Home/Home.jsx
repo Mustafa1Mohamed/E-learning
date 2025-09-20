@@ -4,6 +4,7 @@ import Header from '../../components/Header'
 import Feature from '../../components/Feature'
 import Footer from '../../components/Footer'
 import FeaturedCourses from '../../components/FeaturedCourses'
+import Pricing from '../../components/Pricing'
 import { useSelector } from 'react-redux';
 
 function Home() {
@@ -15,6 +16,7 @@ function Home() {
       <Header />
       <Feature />
       <FeaturedCourses />
+      <Pricing />
       <Footer />
     </div>
   )
