@@ -5,6 +5,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { toggleFav } from "../Store/actions/FavAction";
 import { toggleWhishlist } from "../Store/actions/WhishListAction";
 import { useTranslation } from "react-i18next";
+import { enrollCourse } from "../Store/actions/EnrolledCoursesAction";
+
 
 export default function Card({
     id,
@@ -21,6 +23,10 @@ export default function Card({
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
+   const enrolledCourses = useSelector((state) => state.EnrolledCoursesReducer.enrolled);
+   const isEnrolled = enrolledCourses.some((course) => course.id === id);
+
+
     const favorites = useSelector((state) => state.FavReducers.favorites);
     const whishlist = useSelector((state) => state.WhishlistReducer.whishlist);
 
@@ -30,6 +36,7 @@ export default function Card({
     const isFavorite = favorites.some((course) => course.id === id);
     const isInWishlist = whishlist.some((course) => course.id === id);
     const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+
 
     const coursePayload = {
         id,
@@ -49,6 +56,14 @@ export default function Card({
         if (!currentUser) return navigate("/login");
         dispatch(toggleWhishlist(coursePayload));
     };
+
+
+     const handleEnroll = () => {
+    if (!currentUser) return navigate("/login");
+    if (!isEnrolled) dispatch(enrollCourse(coursePayload));
+    };
+
+    
 
     const renderActionButton = (label, onClick, bgColor, icon = null, alwaysShow = false) =>
         currentUser ? (
@@ -170,15 +185,17 @@ export default function Card({
                         true
                     )}
 
+                    
+
                     {renderActionButton(
-                        t("Enroll Course"),
-                        () => {},
-                        "bg-green-600"
-                    )}
+                     isEnrolled ? t("Enrolled") : t("Enroll Course"),
+                    handleEnroll, isEnrolled ? "bg-gray-400 cursor-not-allowed" : "bg-green-600",
+                  )}
                 </div>
             </div>
         </div>
     );
 }
+
 
 
