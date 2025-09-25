@@ -13,7 +13,8 @@ import Wishlist from './pages/Whishlist/whishlist.jsx';
 import MyCourses from './pages/MyCourses/Mycourses.jsx';
 import Profile from './pages/Profile/Profile.jsx';
 import More from './pages/More/More.jsx';
-import Adminpanel from './pages/dashboard/adminpanel.jsx'
+import AdminPanal from './pages/dashboard/AdminPanal.jsx';
+
 function App() {
   const theme = useSelector(state => state.combineTheme.theme);
   const themeClass = theme === 'Dark' ? 'dark bg-gray-800' : 'bg-white';
@@ -33,7 +34,9 @@ function App() {
           <Route path='/login' element={<Login />} />
           <Route path='/register' element={<Register />} />
           <Route path='/not-found' element={<NotFound />} />
-          <Route path='/adminpanel' element={<Adminpanel />} />
+          
+          <Route path='/AdminPanal' element={<AdminPanal />} />
+        
           <Route path='*' element={<Navigate to='/not-found' replace />} />
         </Routes>
       </BrowserRouter>

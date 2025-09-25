@@ -54,7 +54,7 @@ function Navbar() {
   };
   // Determine theme classes
   const navBgClass = theme === 'Dark' ? 'bg-gray-800' : 'bg-gray-100';
-  const textClass = theme === 'Dark' ? 'dark:text-white' : 'text-black';
+  const textClass = theme === 'Dark' ? 'text-white' : 'text-black';
   return (
     <header dir={i18n.dir()} id="header" className="absolute inset-x-0 top-0 z-50">
       <nav
