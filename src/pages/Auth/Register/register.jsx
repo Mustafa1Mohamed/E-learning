@@ -71,7 +71,7 @@ function Register() {
 
             case "email":
                 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                
+
                 setErrors((prev) => ({
                     ...prev,
                     emailErr: !value
@@ -187,7 +187,7 @@ function Register() {
             return;
         }
 
-   
+
         users.push(form);
         localStorage.setItem("users", JSON.stringify(users));
 
@@ -235,7 +235,7 @@ function Register() {
                 )}
 
                 <form className="space-y-6" onSubmit={handleSubmit}>
-             
+
                     <div className="relative">
                         <input
                             type="text"
@@ -286,7 +286,7 @@ function Register() {
                         ) : null}
                     </div>
 
-       
+
                     <div className="relative">
                         <input
                             type="email"
@@ -350,7 +350,7 @@ function Register() {
                         ) : null}
                     </div>
 
-              
+
                     <div className="relative">
                         <input
                             type={showConfirmPassword ? "text" : "password"}
@@ -416,7 +416,7 @@ function Register() {
                         ) : null}
                     </div>
 
-               
+
                     <div>
                         <span>{t("Already have an account?")} </span>
                         <NavLink
@@ -427,7 +427,7 @@ function Register() {
                         </NavLink>
                     </div>
 
-          
+
                     <button
                         type="submit"
                         className="w-full py-2 px-4 rounded-lg text-white font-medium shadow-md transition bg-indigo-500 hover:bg-indigo-400 login&register"
